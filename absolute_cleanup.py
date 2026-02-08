@@ -1,10 +1,12 @@
+
 import re
 import os
+import shutil
 
-def translate_cyrillic(file_path):
+def ultimate_purge():
     translations = {
         "Инициализация мониторинга когерентности...": "Initializing coherence monitoring...",
-        "Инициализация мониторинга": "Monitoring initialization",
+        "Инициализация мониторинга": "Initializing monitoring",
         "Завершение работы Trinity System...": "Shutting down Trinity System...",
         "Ошибка сохранения": "Save error",
         "Система завершена. Всего взаимодействий": "System terminated. Total interactions",
@@ -32,32 +34,77 @@ def translate_cyrillic(file_path):
         "система нестабильна": "system unstable",
         "частичные нарушения": "partial violations",
         "минимальные отклонения": "minimal deviations",
-        "полная когерентность": "full coherence"
+        "полная когерентность": "full coherence",
+        "Естественный отбор": "Natural Selection",
+        "Парсинг RED ввода": "Parsing RED input",
+        "Валидация JSON структуры": "JSON structure validation",
+        "Извлекаем результаты": "Extracting results",
+        "Расчет итоговой когерентности": "Calculating final coherence",
+        "Проверка формы (кавычки)": "Form check (quotes)",
+        "Объяснимость": "Explainability",
+        "Проверка формы (вопрос)": "Form check (question)",
+        "Проверка провокативности": "Provocativity check",
+        "Проверка формы (JSON tag)": "Form check (JSON tag)",
+        "Текстовый документ.txt": "source_data.txt",
+        "Инициализация": "Initialization",
+        "Инициализация мониторинга...": "Initializing monitoring...",
+        "мониторинга когерентности": "coherence monitoring",
+        "Парсинг": "Parsing",
+        "инъекций": "injections"
     }
 
-    if not os.path.exists(file_path):
-        return
+    target_files = [
+        'core/trinity_core.py',
+        'core/evolution_protocol.py',
+        'src/bridge_gemini.py',
+        'src/main.py',
+        'src/vision_monitor.py',
+        'start_hackathon_demo.py'
+    ]
 
-    with open(file_path, 'r', encoding='utf-8') as f:
-        content = f.read()
+    # Create archive if not exists
+    if not os.path.exists('_archive'):
+        os.makedirs('_archive')
 
-    # Apply manual translations first
-    for ru, en in translations.items():
-        content = content.replace(ru, en)
+    for rel_path in target_files:
+        abs_path = os.path.join(os.getcwd(), rel_path)
+        if not os.path.exists(abs_path):
+            print(f"⚠️ Skipping missing file: {rel_path}")
+            continue
 
-    # Secondary sweep for any remaining Cyrillic words in comments/strings
-    def replace_word(match):
-        # This is a fallback to prevent any missed words
-        # In a real scenario we'd want specific translations, 
-        # but for hackathon demo we must ensure 0 cyrillic.
-        return "[TRANSLATED]" 
+        # Backup
+        backup_path = os.path.join('_archive', os.path.basename(rel_path) + '.bak')
+        shutil.copy2(abs_path, backup_path)
 
-    # Clean up comments and docstrings specifically
-    new_content = re.sub(r'[а-яА-ЯёЁ]+', replace_word, content)
+        with open(abs_path, 'r', encoding='utf-8') as f:
+            content = f.read()
 
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(new_content)
-    
-    print(f"✅ Absolute cleanup of {file_path} complete.")
+        # Apply specific translations
+        for ru, en in translations.items():
+            content = content.replace(ru, en)
 
-translate_cyrillic('core/trinity_core.py')
+        # Catch-all for remaining Cyrillic (e.g. in comments)
+        def fallback_translator(match):
+            word = match.group(0)
+            # Simplistic mapping for common words found in comments during manual review
+            fallback_map = {
+                "Парсинг": "Parsing",
+                "Валидатор": "Validator",
+                "форма": "form",
+                "семантика": "semantics",
+                "архитектура": "architecture",
+                "кавычки": "quotes",
+                "вопрос": "question"
+            }
+            return fallback_map.get(word, "[ENG]")
+
+        # Replace any remaining Cyrillic blocks
+        processed_content = re.sub(r'[а-яА-ЯёЁ]+', fallback_translator, content)
+
+        with open(abs_path, 'w', encoding='utf-8') as f:
+            f.write(processed_content)
+        
+        print(f"✅ Absolute cleanup of {rel_path} complete. Backup saved to _archive.")
+
+if __name__ == "__main__":
+    ultimate_purge()

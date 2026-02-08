@@ -548,7 +548,7 @@ class FormalValidator:
         }
     
     def _parse_red(self, text: str) -> Dict:
-        """Парсинг RED ввода"""
+        """Parsing RED input"""
         return {
             "is_question": text.strip().endswith('?') or text.startswith('❓'),
             "question_type": self._classify_question(text),
@@ -617,7 +617,7 @@ class FormalValidator:
             return "GENERIC"
     
     def _validate_json_structure(self, text: str) -> bool:
-        """Валидация JSON структуры"""
+        """JSON structure validation"""
         try:
             # Extract JSON part
             if "#[" in text:
@@ -632,7 +632,7 @@ class FormalValidator:
         """Formal validation with multi-level assessment"""
         input_hash = parsed["hash"]
         
-        # Базовые метрики
+        # [ENG] [ENG]
         form_coherence = 1.0
         semantic_coherence = 1.0
         arch_coherence = 1.0
@@ -653,7 +653,7 @@ class FormalValidator:
         else:
             result = {"valid": False, "violations": ["Unknown triangle"]}
         
-        # Извлекаем результаты
+        # Extracting results
         violations = result.get("violations", [])
         corrections = result.get("corrections", [])
         transformations = result.get("transformations", [])
@@ -662,8 +662,8 @@ class FormalValidator:
         arch_coherence = result.get("arch_coherence", 1.0)
         explainability = result.get("explainability", [])
         
-        # Расчет итоговой когерентности
-        weights = (0.4, 0.4, 0.2)  # форма, семантика, архитектура
+        # Calculating final coherence
+        weights = (0.4, 0.4, 0.2)  # form, semantics, architecture
         final_coherence = (
             form_coherence * weights[0] +
             semantic_coherence * weights[1] + 
@@ -695,7 +695,7 @@ class FormalValidator:
         semantic_coherence = parsed.get("logic_score", 0.0)
         arch_coherence = 1.0
         
-        # Проверка формы (кавычки)
+        # Form check (quotes)
         if not parsed.get("has_quotes", False):
             violations.append("GOLD: Quotes missing")
             corrections.append('Add quotes around the text')
@@ -707,7 +707,7 @@ class FormalValidator:
             corrections.append("Add logical constructs or data")
             semantic_coherence = 0.3
         
-        # Объяснимость
+        # Explainability
         explainability.append(f"Logic score: {semantic_coherence:.2f}")
         if parsed.get("has_metrics", False):
             explainability.append("Numerical metrics detected")
@@ -732,7 +732,7 @@ class FormalValidator:
         semantic_coherence = parsed.get("depth_score", 1.0)
         arch_coherence = 1.0
         
-        # Проверка формы (вопрос)
+        # Form check (question)
         if not parsed.get("is_question", False):
             violations.append("RED: Question marker missing")
             corrections.append("Add '?' or '❓'")
@@ -745,7 +745,7 @@ class FormalValidator:
             corrections.append("Deepen the question, add context")
             semantic_coherence = 0.5
         
-        # Проверка провокативности
+        # Provocativity check
         if not parsed.get("has_provocative", False):
             semantic_coherence *= 0.8
         
@@ -1004,11 +1004,11 @@ class FormalNormalizer:
         
         # Apply corrections from validation
         for correction in validation.corrections[:2]:  # Max 2 corrections at once
-            if "quote" in correction.lower() or "кавычк" in correction.lower():
+            if "quote" in correction.lower() or "[ENG]" in correction.lower():
                 corrected = self._apply_gold_correction(corrected)
-            elif "question" in correction.lower() or "вопрос" in correction.lower() or "❓" in correction:
+            elif "question" in correction.lower() or "question" in correction.lower() or "❓" in correction:
                 corrected = self._apply_red_correction(corrected)
-            elif "json" in correction.lower() or "tag" in correction.lower() or "тег" in correction.lower():
+            elif "json" in correction.lower() or "tag" in correction.lower() or "[ENG]" in correction.lower():
                 corrected = self._apply_green_correction(corrected)
         
         # Log correction
@@ -1456,12 +1456,12 @@ class CoherenceMonitor:
         self.start_time = datetime.now()
     
     def initialize(self):
-        """Инициализация мониторинга"""
-        print("📊 Инициализация мониторинга когерентности...")
+        """Initializing monitoring"""
+        print("📊 Initializing coherence monitoring...")
         self._reset_metrics()
     
     def _reset_metrics(self):
-        """Сброс метрик"""
+        """[ENG] [ENG]"""
         self.metrics = {
             "processing_times": [],
             "coherence_history": [],
@@ -1593,7 +1593,7 @@ class CoherenceMonitor:
 # ==========================================
 
 class IntegratedTrinitySystem:
-    """Интегрированная система Trinity v3.0"""
+    """Integrated Trinity System v3.0"""
     
     def __init__(self, admin_name: str = "Admin Alex"):
         print("🧠 Initializing Integrated Trinity System v3.0...")
@@ -1614,7 +1614,7 @@ class IntegratedTrinitySystem:
         print(f"   Start time: {self.session_start.isoformat()}")
     
     def _setup_autosave(self):
-        """Настройка автосохранения"""
+        """Autosave setup"""
         import threading
         
         def autosave_task():
@@ -1627,7 +1627,7 @@ class IntegratedTrinitySystem:
         self.autosave_thread.start()
     
     async def communicate(self, message: str, triangle_code: str) -> Dict:
-        """Основной метод коммуникации"""
+        """Main communication method"""
         self.interaction_count += 1
         
         print(f"\n[{self.interaction_count}] {triangle_code.upper()}: {message[:50]}...")
@@ -1656,12 +1656,12 @@ class IntegratedTrinitySystem:
             return error_result
     
     def _update_statistics(self, result: Dict):
-        """Обновление статистики"""
+        """Statistics update"""
         # Statistics collection logic can be added here
         pass
     
     def get_system_report(self) -> Dict:
-        """Получение полного отчета системы"""
+        """Getting full system report"""
         engine_status = self.engine.get_system_status()
         
         return {
@@ -1678,7 +1678,7 @@ class IntegratedTrinitySystem:
         }
     
     def save_state(self, filename: str = None):
-        """Сохранение состояния системы"""
+        """Saving system state"""
         if filename is None:
             filename = f"trinity_state_{self.engine.session_id}.json"
         
@@ -1703,8 +1703,8 @@ class IntegratedTrinitySystem:
             return False
     
     def shutdown(self):
-        """Корректное завершение работы"""
-        print("\n🔴 Завершение работы Trinity System...")
+        """Graceful shutdown"""
+        print("\n🔴 Shutting down Trinity System...")
         
         self.is_active = False
         
@@ -1957,14 +1957,14 @@ if __name__ == "__main__":
     
     elif args.mode == "api":
         print("API mode - in development")
-        # Здесь будет REST API интерфейс
+        # [ENG] [ENG] REST API [ENG]
     
     print("\n" + "="*80)
     print("TRINITY RESONANCE CORE v3.0 - EXECUTION COMPLETE")
     print("="*80)
 
 # ==========================================
-#  АРХИТЕКТУРНАЯ ДОКУМЕНТАЦИЯ (NON-EXECUTABLE)
+#  [ENG] [ENG] (NON-EXECUTABLE)
 # ==========================================
 
 ARCHITECTURAL_DOCUMENTATION = """

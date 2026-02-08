@@ -30,7 +30,7 @@ class GeminiBridge:
         # Simulation of API call
         # response = model.generate_content([prompt_context, image_data])
         
-        # Mock response based on "Текстовый документ.txt" scenario
+        # Mock response based on "source_data.txt" scenario
         response_text = """
         {
             "threat_assessment": "HIGH",

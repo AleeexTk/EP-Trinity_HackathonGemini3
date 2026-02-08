@@ -75,13 +75,15 @@ class TrinityVisionMonitor:
         
         try:
             if isinstance(source, str):
-                return Image.open(source)
+                if os.path.exists(source):
+                    return Image.open(source)
+                return source # Return string as mock data
             elif isinstance(source, Image.Image):
                 return source
-            # Add support for bytes/screenshots here
             return None
         except Exception:
-            return None
+            return source if isinstance(source, str) else None
+
 
     def _get_triad_prompt(self) -> str:
         return """

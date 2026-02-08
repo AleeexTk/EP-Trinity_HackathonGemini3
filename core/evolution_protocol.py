@@ -7,6 +7,8 @@ import os
 from copy import deepcopy
 from collections import defaultdict
 import asyncio
+from typing import Dict, List, Any, Tuple
+
 
 # ==========================================
 #  MOCK UTILITIES & MISSING CLASSES
@@ -81,7 +83,7 @@ class QuantumRealityProtocol:
                 self._run_tests(reality)
                 self._log_bifurcations(reality, gen)
             
-            # Естественный отбор
+            # Natural Selection
             self.realities.sort(key=lambda r: r.fitness_score, reverse=True)
             self._crossover_realities()
             
@@ -184,7 +186,7 @@ class TraitRecombinator:
         # Bifurcation analysis for useful mutations
         beneficial_traits = self._analyze_breakthroughs()
         
-        # Создание нового ядра-химеры
+        # [ENG] [ENG] [ENG]-[ENG]
         hybrid_core = deepcopy(self.base_cores[0])
         
         for trait, value in beneficial_traits.items():
@@ -358,14 +360,14 @@ class MultiverseConsole:
 #  6. Production Gateway
 # ==========================================
 class ProductionGateway:
-    """Мост между эволюционной песочницей и production"""
+    """[ENG] [ENG] [ENG] [ENG] [ENG] production"""
     
     def __init__(self, sandbox):
         self.sandbox = sandbox
         self.quality_gate = QualityGate()
         
     def promote_to_production(self, hybrid_core):
-        """Аккуратный перенос черт в production"""
+        """[ENG] [ENG] [ENG] [ENG] production"""
         
         # 1. Stability validation
         if not self.quality_gate.stress_test(hybrid_core):
