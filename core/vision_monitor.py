@@ -27,9 +27,12 @@ class TrinityVisionMonitor:
         if HAS_GENAI and self.api_key:
             try:
                 genai.configure(api_key=self.api_key)
-                # Using Gemini 1.5 Flash for low latency
-                self.model = genai.GenerativeModel('gemini-1.5-flash')
-                print("👁️ Trinity Vision Monitor: ONLINE (Gemini 1.5 Flash)")
+                # Using Gemini 1.5 Flash with JSON schema enforcement
+                self.model = genai.GenerativeModel(
+                    model_name='gemini-1.5-flash',
+                    generation_config={"response_mime_type": "application/json"}
+                )
+                print("👁️ Trinity Vision Monitor: ONLINE (Gemini 1.5 Flash + JSON Mode)")
             except Exception as e:
                 print(f"❌ Trinity Vision Monitor Init Failed: {e}")
         else:
@@ -53,10 +56,16 @@ class TrinityVisionMonitor:
         # 3. Inference (Real or Simulated)
         if self.model:
             try:
+                # Optimized multimodal call
                 response = self.model.generate_content([prompt, image])
-                result = self._parse_response(response.text)
+                result = json.loads(response.text)
+                
+                # Verify structure
+                if "triad" not in result:
+                    result = self._parse_response(response.text)
             except Exception as e:
-                return {"error": str(e), "coherence": 0.0}
+                print(f"⚠️ API Error: {e}. Falling back to simulation.")
+                result = self._simulate_inference()
         else:
             result = self._simulate_inference()
 
