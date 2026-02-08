@@ -18,8 +18,8 @@ def analyze_screen(image_data):
     
     print(f"🧠 [TRINITY] Scenario recognized: {scenario}")
     
-    # 3. Прогоняем через Trinity Resonance (верификация)
-    # 4. Выдаем в Voice Agent
+    # 3. Process through Trinity Resonance (verification)
+    # 4. Output to Voice Agent
     return {
         "scenario": scenario,
         "tactical_advice": "Target verified: Full torso risk recommended to disable AP generation."

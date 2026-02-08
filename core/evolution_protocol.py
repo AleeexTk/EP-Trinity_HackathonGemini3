@@ -32,10 +32,10 @@ def create_initial_core():
 #  CORE PRINCIPLES
 # ==========================================
 """
-Три столпа системы:
-1. Реальности = ветки эволюции, а не симуляции
-2. Перенос черт, а не целых состояний
-3. Бинокулярное зрение: анализ и разрывов, и непрерывностей
+Three pillars of the system:
+1. Realities = branches of evolution, not simulations
+2. Trait transfer, not entire state transfer
+3. Binocular vision: analysis of both gaps and continuities
 """
 
 # ==========================================
@@ -52,7 +52,7 @@ class RealityVector:
             "memory_pressure": random.uniform(0.5, 2.0),
             "noise_level": random.uniform(0.05, 0.3)
         }
-        # Глубокая копия с мутациями
+        # Deep copy with mutations
         self.cores = self._mutate_cores(deepcopy(base_cores))
         self.bifurcation_log = []
         self.fitness_score = 0
@@ -88,21 +88,48 @@ class QuantumRealityProtocol:
         return self._extract_optimal_traits()
     
     def _run_tests(self, reality):
-        """Многомерное тестирование с акцентом на разные аспекты"""
-        # MOCKED TESTS
+        """Multidimensional testing with focus on various aspects"""
+        # Attempt to load real telemetry to bias the scores
+        biases = self._load_real_telemetry()
+        
         scores = {
-            "stability": self._test_black_swan(reality.cores),
+            "stability": self._test_black_swan(reality.cores) * biases.get("coherence", 1.0),
             "adaptability": self._test_changing_env(reality.cores),
-            "efficiency": self._test_entropy_optimization(reality.cores),
-            "security": self._test_quantum_threats(reality.cores)
+            "efficiency": self._test_entropy_optimization(reality.cores) * (2.0 - biases.get("latency_bias", 1.0)),
+            "security": self._test_quantum_threats(reality.cores) * biases.get("security_bias", 1.0)
         }
         reality.fitness_score = self._calculate_meta_fitness(scores)
         
+    def _load_real_telemetry(self) -> Dict[str, float]:
+        """Loads latest report to guide evolution"""
+        biases = {"coherence": 1.0, "latency_bias": 1.0, "security_bias": 1.0}
+        try:
+            reports = sorted([f for f in os.listdir('.') if f.startswith('trinity_state_') and f.endswith('.json')])
+            if reports:
+                with open(reports[-1], 'r') as f:
+                    data = json.load(f)
+                    # Extract metrics from the FormalResonanceEngine report structure
+                    engine_data = data.get("engine", {})
+                    biases["coherence"] = engine_data.get("coherence", {}).get("average", 1.0)
+                    
+                    monitoring = engine_data.get("monitoring", {})
+                    perf = monitoring.get("performance", {})
+                    avg_lat = perf.get("avg_processing_time", 0.002)
+                    # Normalize latency bias: lower is better, centered around 2ms
+                    biases["latency_bias"] = max(0.5, min(1.5, avg_lat / 0.002))
+                    
+                    threats = engine_data.get("threats", {})
+                    if threats.get("level") != "LOW":
+                        biases["security_bias"] = 1.2
+        except Exception:
+            pass
+        return biases
+        
     def _log_bifurcations(self, reality, generation):
-        """Фиксация точек расхождения"""
+        """Logging divergence points"""
         if generation > 0 and reality.history:
             prev_score = reality.history[-1]
-            if abs(reality.fitness_score - prev_score) > 0.15:  # Порог расхождения
+            if abs(reality.fitness_score - prev_score) > 0.15:  # Divergence threshold
                 bifurcation = {
                     "gen": generation,
                     "vector": reality.traits.copy(),
@@ -153,8 +180,8 @@ class TraitRecombinator:
         self.base_cores = [create_initial_core()] # Placeholder if not set
         
     def create_hybrid_core(self, top_n=3):
-        """Создание гибрида из лучших черт разных реальностей"""
-        # Анализ бифуркаций на предмет полезных мутаций
+        """Creating a hybrid from best traits of different realities"""
+        # Bifurcation analysis for useful mutations
         beneficial_traits = self._analyze_breakthroughs()
         
         # Создание нового ядра-химеры
@@ -165,7 +192,7 @@ class TraitRecombinator:
                 if 'traits' not in hybrid_core: hybrid_core['traits'] = {}
                 hybrid_core['traits'][trait] = value
         
-        # Применение композиции паттернов
+        # Applying pattern composition
         hybrid_core['patterns'] = self._compose_patterns(
             self._extract_patterns_from_realities()
         )
@@ -173,7 +200,7 @@ class TraitRecombinator:
         return hybrid_core
     
     def _analyze_breakthroughs(self):
-        """Выявление черт, давших максимальный скачок эффективности"""
+        """Identifying traits that yielded maximum efficiency jump"""
         trait_impact = defaultdict(list)
         
         for bifurcation in self.registry:
@@ -181,11 +208,11 @@ class TraitRecombinator:
                 impact = bifurcation['delta'] / len(bifurcation['vector'])
                 trait_impact[trait].append((value, impact))
         
-        # Выбираем значения черт с наибольшим положительным влиянием
+        # Selecting trait values with highest positive impact
         optimal_traits = {}
         for trait, impacts in trait_impact.items():
             if impacts:
-                # Взвешенное среднее по влиянию
+                # Weighted average by impact
                 total_impact = sum(i for _, i in impacts)
                 if total_impact != 0:
                      weighted = sum(v * i for v, i in impacts) / total_impact
@@ -207,22 +234,22 @@ class TraitRecombinator:
 class EvolutionarySandbox:
     def __init__(self):
         self.generation = 0
-        self.hall_of_fame = []  # Лучшие конфигурации всех времён
-        self.genetic_memory = {}  # Паттерны, пережившие кризисы
+        self.hall_of_fame = []  # Best configurations of all time
+        self.genetic_memory = {}  # Patterns that survived crises
         
     def evolutionary_cycle(self, cores, iterations=10):
         for i in range(iterations):
             protocol = QuantumRealityProtocol(cores)
             results = protocol.run_evolution_cycle() # Returns traits
             
-            # Сохраняем успешные конфигурации
+            # Save successful configurations
             self._update_hall_of_fame(protocol.realities[0])
             
-            # Извлекаем уроки из бифуркаций
+            # Extract lessons from bifurcations
             lessons = self._extract_lessons(protocol.bifurcation_registry)
             self.genetic_memory[f"gen_{self.generation}"] = lessons
             
-            # Создаём новое поколение ядер
+            # Creating new generation of cores
             recombinator = TraitRecombinator(protocol.bifurcation_registry)
             recombinator.base_cores = cores
             
@@ -234,7 +261,7 @@ class EvolutionarySandbox:
         return cores, self.genetic_memory
     
     def _extract_lessons(self, bifurcations):
-        """Превращение бифуркаций в эволюционные уроки"""
+        """Turning bifurcations into evolutionary lessons"""
         lessons = {
             "survival_patterns": [],
             "crisis_responses": [],
@@ -274,19 +301,19 @@ class MultiverseConsole:
         self.visualizer = RealityVisualizer()
         
     def start_interactive_session(self):
-        """Интерактивное исследование реальностей"""
+        """Interactive realities exploration"""
         while True:
             print("\n" + "="*60)
             print("MULTIVERSE CORE EVOLUTION PROTOCOL")
             print("="*60)
-            print("1. Запуск эволюционного цикла")
-            print("2. Исследовать точку бифуркации")
-            print("3. Создать химерное ядро из черт")
-            print("4. Просмотреть Genetic Memory")
-            print("5. Quantum Leap (перенос в production)")
-            print("0. Выход")
+            print("1. Launch evolutionary cycle")
+            print("2. Explore bifurcation point")
+            print("3. Create chimeric core from traits")
+            print("4. View Genetic Memory")
+            print("5. Quantum Leap (promote to production)")
+            print("0. Exit")
             
-            choice = input("\nВыбор: ")
+            choice = input("\nChoice: ")
             
             if choice == "1":
                 self._run_evolution()
@@ -302,16 +329,16 @@ class MultiverseConsole:
                 break
                 
     def _run_evolution(self):
-        """Запуск и визуализация эволюции"""
+        """Evolution launch and visualization"""
         cores = [self._create_base_core()]
         
-        print(f"\n🚀 Запуск эволюции поколения {self.sandbox.generation}")
-        print("Создаю 10 альтернативных реальностей...")
+        print(f"\n🚀 Launching evolution of generation {self.sandbox.generation}")
+        print("Creating 10 alternative realities...")
         
         new_cores, memory = self.sandbox.evolutionary_cycle(cores, iterations=1) # Reduced iterations for demo
         
-        print(f"\n✅ Эволюция завершена")
-        print(f"Лучшая конфигурация:")
+        print(f"\n✅ Evolution complete")
+        print(f"Best configuration:")
         if 'traits' in new_cores[0]:
              print(json.dumps(new_cores[0]['traits'], indent=2))
         else:
@@ -340,11 +367,11 @@ class ProductionGateway:
     def promote_to_production(self, hybrid_core):
         """Аккуратный перенос черт в production"""
         
-        # 1. Валидация стабильности
+        # 1. Stability validation
         if not self.quality_gate.stress_test(hybrid_core):
-            raise Exception("Не проходит stress test")
+            raise Exception("Failed stress test")
         
-        # 2. Постепенный rollout
+        # 2. Gradual rollout
         rollout_plan = {
             "phase_1": {
                 "traits": ["security_bias", "memory_pressure"],
@@ -360,11 +387,11 @@ class ProductionGateway:
             }
         }
         
-        # 3. Перенос с сохранением отката
+        # 3. Transfer with rollback preservation
         self._create_rollback_snapshot()
         
         for phase, config in rollout_plan.items():
-            print(f"\n🎯 {phase}: разворачиваю {config['traits']}")
+            print(f"\n🎯 {phase}: deploying {config['traits']}")
             success = self._deploy_traits(
                 hybrid_core, 
                 config['traits'], 
@@ -375,8 +402,8 @@ class ProductionGateway:
                 self._rollback()
                 break
                 
-        print("\n✨ Quantum Leap выполнен успешно")
-        print("Система эволюционировала, сохранив непрерывность")
+        print("\n✨ Quantum Leap executed successfully")
+        print("System evolved while maintaining continuity")
 
     def _create_rollback_snapshot(self): pass
     def _deploy_traits(self, core, traits, pct): return True
@@ -401,7 +428,7 @@ def main():
     ╚══════════════════════════════════════════════════════════╝
     """)
     
-    # Инициализация
+    # Initialization
     base_cores = [create_initial_core()]
     sandbox = EvolutionarySandbox()
     console = MultiverseConsole(sandbox)
@@ -411,13 +438,13 @@ def main():
          print("Running in DEMO mode...")
          console._run_evolution()
     else:
-        # Интерактивный режим
+        # Interactive mode
         console.start_interactive_session()
         
-    # Или автоматический цикл эволюции
+    # Or automated evolution cycle
     # final_cores, memory = sandbox.evolutionary_cycle(base_cores, iterations=5)
     
-    print("\n🌌 Система завершила работу. Результаты сохранены в Ledger.")
+    print("\n🌌 System finished operation. Results saved to Ledger.")
 
 if __name__ == "__main__":
     main()

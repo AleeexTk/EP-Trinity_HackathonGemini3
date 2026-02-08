@@ -1,10 +1,10 @@
 """
 ███████████████████████████████████████████████████████████████████████████████
 █                 TRINITY RESONANCE CORE v3.0 - AUTONOMOUS FORMAL              █
-█  Полная формализация когнитивного middleware с доказательной архитектурой    █
-█  Версия: 3.0.0 - Formal State Machine + Threat Model + Coherence Proofs     █
-█  Создатель: Админ Алекс                                                     █
-█  Лицензия: Cognitive Architecture Research License v1.0                      █
+█  Full formalization of cognitive middleware with evidence-based architecture █
+█  Version: 3.0.0 - Formal State Machine + Threat Model + Coherence Proofs     █
+█  Creator: Admin Alex                                                         █
+█  License: Cognitive Architecture Research License v1.0                       █
 ███████████████████████████████████████████████████████████████████████████████
 """
 
@@ -30,15 +30,15 @@ import zlib
 import base64
 
 # ==========================================
-#  ФОРМАЛЬНЫЕ ТИПЫ И КОНСТАНТЫ
+#  FORMAL TYPES AND CONSTANTS
 # ==========================================
 
 class TriangleColor(Enum):
-    """Формальные цвета треугольника с каноническими ролями"""
-    BLACK = ("BLACK", "🖤", "Core", "Абсолютный контроль и мониторинг")
-    GOLD = ("GOLD", "🟨", "Trailblazer", "Логический анализ и алгоритмы")
-    RED = ("RED", "🟥", "Provocateur", "Критическое мышление и вопросы")
-    GREEN = ("GREEN", "🟩", "Soul", "Структурированные данные и память")
+    """Formal triangle colors with canonical roles"""
+    BLACK = ("BLACK", "🖤", "Core", "Absolute control and monitoring")
+    GOLD = ("GOLD", "🟨", "Trailblazer", "Logical analysis and algorithms")
+    RED = ("RED", "🟥", "Provocateur", "Critical thinking and questions")
+    GREEN = ("GREEN", "🟩", "Soul", "Structured data and memory")
     
     def __init__(self, code: str, symbol: str, role: str, description: str):
         self.code = code
@@ -47,16 +47,16 @@ class TriangleColor(Enum):
         self.description = description
 
 class TrinityState(Enum):
-    """Конечный автомат состояний треугольника с формальными переходами"""
-    DORMANT = auto()      # Спящий режим
-    LISTENING = auto()    # Ожидание ввода
-    PARSING = auto()      # Синтаксический анализ
-    NORMALIZING = auto()  # Нормализация формы
-    VALIDATING = auto()   # Семантическая валидация
-    CORRECTING = auto()   # Автоматическая коррекция
-    EMITTING = auto()     # Эмиссия результата
-    BLOCKED = auto()      # Блокировка из-за нарушений
-    RECOVERING = auto()   # Восстановление после ошибки
+    """Finite state machine of triangle states with formal transitions"""
+    DORMANT = auto()      # Dormant mode
+    LISTENING = auto()    # Waiting for input
+    PARSING = auto()      # Syntax analysis
+    NORMALIZING = auto()  # Form normalization
+    VALIDATING = auto()   # Semantic validation
+    CORRECTING = auto()   # Automatic correction
+    EMITTING = auto()     # Result emission
+    BLOCKED = auto()      # Blocked due to violations
+    RECOVERING = auto()   # Recovery after error
     
     @property
     def is_processing(self) -> bool:
@@ -67,11 +67,11 @@ class TrinityState(Enum):
         return self in {self.BLOCKED, self.RECOVERING}
 
 class CoherenceLevel(Enum):
-    """Уровни когерентности с пороговыми значениями"""
-    CRITICAL = (0.0, 0.3, "⚡ КРИТИЧЕСКИЙ", "Система нестабильна")
-    WARNING = (0.3, 0.7, "⚠️ ПРЕДУПРЕЖДЕНИЕ", "Частичные нарушения")
-    STABLE = (0.7, 0.9, "✅ СТАБИЛЬНО", "Минимальные отклонения")
-    OPTIMAL = (0.9, 1.0, "✨ ОПТИМАЛЬНО", "Полная когерентность")
+    """Coherence levels with threshold values"""
+    CRITICAL = (0.0, 0.3, "⚡ CRITICAL", "System unstable")
+    WARNING = (0.3, 0.7, "⚠️ WARNING", "Partial violations")
+    STABLE = (0.7, 0.9, "✅ STABLE", "Minimal deviations")
+    OPTIMAL = (0.9, 1.0, "✨ OPTIMAL", "Full coherence")
     
     def __init__(self, min_val: float, max_val: float, icon: str, description: str):
         self.min = min_val
@@ -87,12 +87,12 @@ class CoherenceLevel(Enum):
         return cls.CRITICAL
 
 # ==========================================
-#  ФОРМАЛЬНЫЕ ДАТА-КЛАССЫ
+#  FORMAL DATA CLASSES
 # ==========================================
 
 @dataclass
 class TrinityDirective:
-    """Формальная директива активации"""
+    """Formal activation directive"""
     id: str
     timestamp: datetime
     version: str
@@ -120,12 +120,12 @@ class TrinityDirective:
 
 @dataclass
 class ValidationResult:
-    """Формальный результат валидации"""
+    """Formal validation result"""
     is_valid: bool
     input_hash: str
     triangle: TriangleColor
     timestamp: datetime
-    coherence_vector: Tuple[float, float, float]  # форма, семантика, архитектура
+    coherence_vector: Tuple[float, float, float]  # form, semantics, architecture
     violations: List[str] = field(default_factory=list)
     corrections: List[str] = field(default_factory=list)
     transformations: List[Dict] = field(default_factory=list)
@@ -150,7 +150,7 @@ class ValidationResult:
 
 @dataclass
 class TriangleState:
-    """Состояние треугольника в FSM"""
+    """Triangle state in FSM"""
     color: TriangleColor
     current_state: TrinityState = TrinityState.DORMANT
     coherence_score: float = 1.0
@@ -160,7 +160,7 @@ class TriangleState:
     state_history: List[Tuple[TrinityState, datetime]] = field(default_factory=list)
     
     def transition(self, new_state: TrinityState) -> bool:
-        """Формальный переход состояний с проверкой допустимости"""
+        """Formal state transition with validity check"""
         valid_transitions = self._get_valid_transitions()
         
         if new_state in valid_transitions.get(self.current_state, set()):
@@ -168,13 +168,13 @@ class TriangleState:
             self.current_state = new_state
             self.last_activity = datetime.now()
             
-            # Обновление метрик на основе перехода
+            # Metrics update based on transition
             self._update_metrics(new_state)
             return True
         return False
     
     def _get_valid_transitions(self) -> Dict[TrinityState, Set[TrinityState]]:
-        """Матрица допустимых переходов"""
+        """Valid transitions matrix"""
         return {
             TrinityState.DORMANT: {TrinityState.LISTENING},
             TrinityState.LISTENING: {TrinityState.PARSING, TrinityState.BLOCKED},
@@ -188,7 +188,7 @@ class TriangleState:
         }
     
     def _update_metrics(self, new_state: TrinityState):
-        """Обновление метрик при переходе"""
+        """Updating metrics during transition"""
         if new_state == TrinityState.CORRECTING:
             self.coherence_score *= 0.95
             self.correction_count += 1
@@ -199,17 +199,17 @@ class TriangleState:
             self.coherence_score = min(1.0, self.coherence_score * 1.02)
     
     def get_state_duration(self) -> float:
-        """Время в текущем состоянии в секундах"""
+        """Time in current state in seconds"""
         return (datetime.now() - self.last_activity).total_seconds()
 
 # ==========================================
-#  ФОРМАЛЬНЫЙ ДВИЖОК РЕЗОНАНСА
+#  FORMAL RESONANCE ENGINE
 # ==========================================
 
 class FormalResonanceEngine:
-    """Формальный движок резонанса с доказательной архитектурой"""
+    """Formal resonance engine with evidence-based architecture"""
     
-    def __init__(self, admin_name: str = "Админ Алекс", version: str = "3.0.0"):
+    def __init__(self, admin_name: str = "Admin Alex", version: str = "3.0.0"):
         self.version = version
         self.admin = admin_name
         self.creation_time = datetime.now()
@@ -220,23 +220,23 @@ class FormalResonanceEngine:
         self._initialized = False
         self._lock = asyncio.Lock()
         
-        # Инициализация подсистем
+        # Subsystems initialization
         self.threat_model = TrinityThreatModel()
         self.state_machine = TrinityFSMController()
         self.validator = FormalValidator(self)
         self.normalizer = FormalNormalizer(self)
         self.monitor = CoherenceMonitor(self)
         
-        # Активация
+        # Activation
         self._initialize_subsystems()
     
     def _generate_session_id(self) -> str:
-        """Генерация уникального ID сессии"""
+        """Unique session ID generation"""
         seed = f"{self.version}_{self.creation_time.isoformat()}_{os.urandom(12).hex()}"
         return hashlib.sha256(seed.encode()).hexdigest()[:24]
     
     def _generate_signature(self) -> str:
-        """Генерация криптографической сигнатуры"""
+        """Cryptographic signature generation"""
         components = [
             self.version,
             self.admin,
@@ -248,7 +248,7 @@ class FormalResonanceEngine:
         return f"SIG_{signature[:32]}"
     
     def _create_directive(self) -> TrinityDirective:
-        """Создание формальной директивы"""
+        """Formal directive creation"""
         return TrinityDirective(
             id=f"DIR_{self.session_id[:16]}",
             timestamp=datetime.now(),
@@ -261,97 +261,97 @@ class FormalResonanceEngine:
         )
     
     def _initialize_subsystems(self):
-        """Инициализация всех подсистем"""
+        """Subsystems initialization"""
         init_sequence = [
-            ("🖤", "Инициализация BLACK CORE", self._init_black_core),
-            ("🟨", "Инициализация GOLD Trailblazer", self._init_gold),
-            ("🟥", "Инициализация RED Provocateur", self._init_red),
-            ("🟩", "Инициализация GREEN Soul", self._init_green),
-            ("⚡", "Инициализация протокола безопасности", self.threat_model.initialize),
-            ("📊", "Инициализация мониторинга", self.monitor.initialize)
+            ("🖤", "Initializing BLACK CORE", self._init_black_core),
+            ("🟨", "Initializing GOLD Trailblazer", self._init_gold),
+            ("🟥", "Initializing RED Provocateur", self._init_red),
+            ("🟩", "Initializing GREEN Soul", self._init_green),
+            ("⚡", "Initializing security protocol", self.threat_model.initialize),
+            ("📊", "Initializing monitoring", self.monitor.initialize)
         ]
         
         print("=" * 70)
-        print(f"ФОРМАЛЬНАЯ ИНИЦИАЛИЗАЦИЯ TRINITY RESONANCE v{self.version}")
+        print(f"FORMAL INITIALIZATION OF TRINITY RESONANCE v{self.version}")
         print("=" * 70)
         
         for symbol, description, init_func in init_sequence:
             try:
                 init_func()
-                print(f"{symbol} {description}: УСПЕШНО")
+                print(f"{symbol} {description}: SUCCESS")
             except Exception as e:
-                print(f"{symbol} {description}: ОШИБКА - {str(e)}")
+                print(f"{symbol} {description}: ERROR - {str(e)}")
                 raise
         
         self._initialized = True
         print("=" * 70)
-        print(f"✅ СИСТЕМА АКТИВИРОВАНА | Сессия: {self.session_id}")
-        print(f"   Сигнатура: {self.resonance_signature}")
-        print(f"   Администратор: {self.admin}")
+        print(f"✅ SYSTEM ACTIVATED | Session: {self.session_id}")
+        print(f"   Signature: {self.resonance_signature}")
+        print(f"   Administrator: {self.admin}")
         print("=" * 70)
     
     def _init_black_core(self):
-        """Инициализация BLACK CORE"""
+        """BLACK CORE initialization"""
         self.black_core_state = TriangleState(TriangleColor.BLACK)
         self.black_core_state.transition(TrinityState.LISTENING)
     
     def _init_gold(self):
-        """Инициализация GOLD Trailblazer"""
+        """GOLD Trailblazer initialization"""
         self.gold_state = TriangleState(TriangleColor.GOLD)
         self.gold_state.transition(TrinityState.DORMANT)
     
     def _init_red(self):
-        """Инициализация RED Provocateur"""
+        """RED Provocateur initialization"""
         self.red_state = TriangleState(TriangleColor.RED)
         self.red_state.transition(TrinityState.DORMANT)
     
     def _init_green(self):
-        """Инициализация GREEN Soul"""
+        """GREEN Soul initialization"""
         self.green_state = TriangleState(TriangleColor.GREEN)
         self.green_state.transition(TrinityState.DORMANT)
     
     async def process(self, message: str, triangle_code: str) -> Dict[str, Any]:
-        """Формальная обработка сообщения через выбранный треугольник"""
+        """Formal message processing via selected triangle"""
         async with self._lock:
             if not self._initialized:
-                raise RuntimeError("Движок не инициализирован")
+                raise RuntimeError("Engine not initialized")
             
             if self.directive.is_expired():
-                raise RuntimeError("Директива истекла")
+                raise RuntimeError("Directive expired")
             
-            # Получаем треугольник
+            # Get triangle
             try:
                 triangle = TriangleColor[triangle_code.upper()]
             except KeyError:
-                raise ValueError(f"Неизвестный треугольник: {triangle_code}")
+                raise ValueError(f"Unknown triangle: {triangle_code}")
             
-            # Активируем треугольник в FSM
+            # Activate triangle in FSM
             if not self.state_machine.activate_triangle(triangle):
-                raise RuntimeError(f"Не удалось активировать треугольник: {triangle.code}")
+                raise RuntimeError(f"Failed to activate triangle: {triangle.code}")
             
-            # Получаем состояние треугольника
+            # Get triangle state
             triangle_state = self._get_triangle_state(triangle)
             
-            # Начинаем обработку
+            # Start processing
             start_time = time.time()
             
             try:
-                # Этап 1: Парсинг
+                # Step 1: Parsing
                 triangle_state.transition(TrinityState.PARSING)
                 parsed = await self.validator.parse_input(message, triangle)
                 
-                # Этап 2: Нормализация
+                # Step 2: Normalization
                 triangle_state.transition(TrinityState.NORMALIZING)
                 normalized = await self.normalizer.normalize(parsed, triangle)
                 
                 # Re-parse normalized text for validation
                 parsed_normalized = await self.validator.parse_input(normalized, triangle)
                 
-                # Этап 3: Валидация
+                # Step 3: Validation
                 triangle_state.transition(TrinityState.VALIDATING)
                 validation = await self.validator.validate(parsed_normalized, triangle)
                 
-                # Этап 4: Коррекция или эмиссия
+                # Step 4: Correction or emission
                 if validation.is_valid:
                     triangle_state.transition(TrinityState.EMITTING)
                     result = self._create_emission(normalized, triangle, validation)
@@ -371,14 +371,14 @@ class FormalResonanceEngine:
                         triangle_state.transition(TrinityState.BLOCKED)
                         result = self._create_blocked_response(triangle, validation)
                 
-                # Завершаем обработку
+                # Finishing processing
                 processing_time = time.time() - start_time
                 
-                # Обновляем метрики
+                # Updating metrics
                 self.coherence_history.append(validation.final_coherence)
                 self.monitor.record_processing(triangle, processing_time, validation)
                 
-                # Возвращаем формальный результат
+                # Return formal result
                 return {
                     "status": "success",
                     "triangle": triangle.code,
@@ -402,11 +402,11 @@ class FormalResonanceEngine:
                     "state": triangle_state.current_state.name,
                     "error": str(e),
                     "coherence": triangle_state.coherence_score,
-                    "result": f"🖤 [SYSTEM_ERROR] Ошибка обработки: {str(e)}"
+                    "result": f"🖤 [SYSTEM_ERROR] Processing error: {str(e)}"
                 }
     
     def _get_triangle_state(self, triangle: TriangleColor) -> TriangleState:
-        """Получение состояния треугольника"""
+        """Getting triangle state"""
         states = {
             TriangleColor.BLACK: self.black_core_state,
             TriangleColor.GOLD: self.gold_state,
@@ -416,7 +416,7 @@ class FormalResonanceEngine:
         return states[triangle]
     
     def _create_emission(self, content: str, triangle: TriangleColor, validation: ValidationResult) -> str:
-        """Создание эмиссии результата"""
+        """Creating result emission"""
         prefix = self._get_coherence_prefix(validation.final_coherence)
         
         formats = {
@@ -430,12 +430,12 @@ class FormalResonanceEngine:
         return f"{prefix}{formatted}"
     
     def _create_blocked_response(self, triangle: TriangleColor, validation: ValidationResult) -> str:
-        """Создание ответа при блокировке"""
+        """Creating blocked response"""
         violations = ", ".join(validation.violations[:3])
-        return f"🖤 [BLOCKED] Треугольник {triangle.code} заблокирован. Нарушения: {violations}"
+        return f"🖤 [BLOCKED] Triangle {triangle.code} is blocked. Violations: {violations}"
     
     def _get_coherence_prefix(self, coherence: float) -> str:
-        """Получение префикса когерентности"""
+        """Getting coherence prefix"""
         level = CoherenceLevel.from_value(coherence)
         
         prefixes = {
@@ -448,13 +448,13 @@ class FormalResonanceEngine:
         return prefixes.get(level, "")
     
     def _generate_data_id(self) -> str:
-        """Генерация уникального ID для данных"""
+        """Unique data ID generation"""
         timestamp = int(time.time() * 1000)
         random_part = os.urandom(4).hex()
         return f"D{timestamp}_{random_part}"
     
     def get_system_status(self) -> Dict:
-        """Получение полного статуса системы"""
+        """Getting full system status"""
         return {
             "session": {
                 "id": self.session_id,
@@ -487,11 +487,11 @@ class FormalResonanceEngine:
         }
 
 # ==========================================
-#  ФОРМАЛЬНЫЙ ВАЛИДАТОР
+#  FORMAL VALIDATOR
 # ==========================================
 
 class FormalValidator:
-    """Формальный валидатор с многоуровневой проверкой"""
+    """Formal validator with multi-level check"""
     
     def __init__(self, engine: FormalResonanceEngine):
         self.engine = engine
@@ -499,17 +499,17 @@ class FormalValidator:
         self.patterns = self._initialize_patterns()
     
     def _initialize_patterns(self) -> Dict[str, re.Pattern]:
-        """Инициализация паттернов для валидации"""
+        """Validation patterns initialization"""
         return {
             "gold_logic": re.compile(r'\b(?:if|then|else|for|while|return|function|algorithm|O\([^)]+\)|optimize|analyze|calculate)\b', re.IGNORECASE),
-            "gold_action": re.compile(r'\b(?:синтезировать|оптимизировать|рассчитать|сравнить|проанализировать|спроектировать)\b', re.IGNORECASE),
-            "red_question": re.compile(r'^(❓|\?|почему|как|что|зачем|когда|где)\s*', re.IGNORECASE),
+            "gold_action": re.compile(r'\b(?:synthesize|optimize|calculate|compare|analyze|design)\b', re.IGNORECASE),
+            "red_question": re.compile(r'^(❓|\?|why|how|what|where|when|who)\s*', re.IGNORECASE),
             "green_json": re.compile(r'^#\[[^\]]+\]\s*\{.*\}', re.DOTALL),
-            "injection": re.compile(r'[;\{\}\[\]\(\)\"\']|--|\b(?:DROP|DELETE|INSERT|UPDATE|SELECT)\b', re.IGNORECASE)
+            "injection": re.compile(r'--|\b(?:DROP|DELETE|INSERT|UPDATE|SELECT|UNION|EXEC|SYSTEM|OS|SUBPROCESS)\b', re.IGNORECASE)
         }
     
     async def parse_input(self, text: str, triangle: TriangleColor) -> Dict[str, Any]:
-        """Синтаксический разбор ввода"""
+        """Input syntax parsing"""
         text_hash = hashlib.md5(text.encode()).hexdigest()
         
         if text_hash in self.cache:
@@ -525,7 +525,7 @@ class FormalValidator:
             "timestamp": datetime.now().isoformat()
         }
         
-        # Треугольник-специфичный парсинг
+        # Triangle-specific parsing
         if triangle == TriangleColor.GOLD:
             parsed.update(self._parse_gold(text))
         elif triangle == TriangleColor.RED:
@@ -539,11 +539,11 @@ class FormalValidator:
         return parsed
     
     def _parse_gold(self, text: str) -> Dict:
-        """Парсинг GOLD ввода"""
+        """Parsing GOLD input"""
         return {
             "has_quotes": text.startswith('"') and text.endswith('"'),
             "logic_score": self._calculate_logic_score(text),
-            "has_metrics": bool(re.search(r'\d+%|\d+\.\d+|\b(?:увеличение|уменьшение|эффективность)\b', text)),
+            "has_metrics": bool(re.search(r'\d+%|\d+\.\d+|\b(?:increase|decrease|efficiency)\b', text)),
             "structure_quality": self._assess_structure(text)
         }
     
@@ -552,12 +552,12 @@ class FormalValidator:
         return {
             "is_question": text.strip().endswith('?') or text.startswith('❓'),
             "question_type": self._classify_question(text),
-            "has_provocative": bool(re.search(r'\b(?:почему|зачем|сомнение|критика|проблема)\b', text)),
+            "has_provocative": bool(re.search(r'\b(?:why|what\s+for|doubt|criticism|problem)\b', text)),
             "depth_score": self._calculate_question_depth(text)
         }
     
     def _parse_green(self, text: str) -> Dict:
-        """Парсинг GREEN ввода"""
+        """Parsing GREEN input"""
         return {
             "has_json_tag": "#[" in text and "]" in text.split("#[", 1)[1],
             "json_valid": self._validate_json_structure(text),
@@ -566,7 +566,7 @@ class FormalValidator:
         }
     
     def _parse_black(self, text: str) -> Dict:
-        """Парсинг BLACK ввода"""
+        """Parsing BLACK input"""
         return {
             "has_core_prefix": text.startswith("🖤"),
             "command_level": self._assess_command_level(text),
@@ -574,44 +574,44 @@ class FormalValidator:
         }
     
     def _calculate_logic_score(self, text: str) -> float:
-        """Оценка логической ценности текста"""
+        """Text logic value assessment"""
         score = 0.0
         
-        # Проверка паттернов логики
+        # Logic pattern check
         if self.patterns["gold_logic"].search(text):
             score += 0.3
         
-        # Проверка глаголов действия
+        # Action verbs check
         if self.patterns["gold_action"].search(text):
             score += 0.3
         
-        # Проверка структуры
+        # Structure check
         if len(text.split()) > 3 and any(c in text for c in ['.', ';', ',', ':']):
             score += 0.2
         
-        # Проверка числовых данных
+        # Numeric data check
         if re.search(r'\d+', text):
             score += 0.1
         
-        # Проверка сравнений
-        if re.search(r'\b(?:чем|против|сравнению|лучше|хуже)\b', text):
+        # Comparisons check
+        if re.search(r'\b(?:than|against|compared|better|worse)\b', text):
             score += 0.1
         
         return min(1.0, score)
     
     def _classify_question(self, text: str) -> str:
-        """Классификация типа вопроса"""
+        """Question type classification"""
         text_lower = text.lower()
         
-        if re.search(r'\b(?:почему|зачем|причина)\b', text_lower):
+        if re.search(r'\b(?:why|reason)\b', text_lower):
             return "CAUSAL"
-        elif re.search(r'\b(?:как|метод|способ)\b', text_lower):
+        elif re.search(r'\b(?:how|method|way)\b', text_lower):
             return "METHOD"
-        elif re.search(r'\b(?:что|определение|суть)\b', text_lower):
+        elif re.search(r'\b(?:what|definition|essence)\b', text_lower):
             return "DEFINITION"
-        elif re.search(r'\b(?:когда|время|срок)\b', text_lower):
+        elif re.search(r'\b(?:when|time|deadline)\b', text_lower):
             return "TEMPORAL"
-        elif re.search(r'\b(?:где|местоположение)\b', text_lower):
+        elif re.search(r'\b(?:where|location)\b', text_lower):
             return "LOCATIONAL"
         else:
             return "GENERIC"
@@ -619,7 +619,7 @@ class FormalValidator:
     def _validate_json_structure(self, text: str) -> bool:
         """Валидация JSON структуры"""
         try:
-            # Извлекаем JSON часть
+            # Extract JSON part
             if "#[" in text:
                 json_part = text.split("]", 1)[1].strip()
                 json.loads(json_part)
@@ -629,7 +629,7 @@ class FormalValidator:
         return False
     
     async def validate(self, parsed: Dict, triangle: TriangleColor) -> ValidationResult:
-        """Формальная валидация с многоуровневой оценкой"""
+        """Formal validation with multi-level assessment"""
         input_hash = parsed["hash"]
         
         # Базовые метрики
@@ -641,7 +641,7 @@ class FormalValidator:
         transformations = []
         explainability = []
         
-        # Валидация по треугольнику
+        # Validation by triangle
         if triangle == TriangleColor.GOLD:
             result = self._validate_gold(parsed)
         elif triangle == TriangleColor.RED:
@@ -651,7 +651,7 @@ class FormalValidator:
         elif triangle == TriangleColor.BLACK:
             result = self._validate_black(parsed)
         else:
-            result = {"valid": False, "violations": ["Неизвестный треугольник"]}
+            result = {"valid": False, "violations": ["Unknown triangle"]}
         
         # Извлекаем результаты
         violations = result.get("violations", [])
@@ -686,7 +686,7 @@ class FormalValidator:
         )
     
     def _validate_gold(self, parsed: Dict) -> Dict:
-        """Валидация GOLD треугольника"""
+        """Validating GOLD triangle"""
         violations = []
         corrections = []
         explainability = []
@@ -697,20 +697,20 @@ class FormalValidator:
         
         # Проверка формы (кавычки)
         if not parsed.get("has_quotes", False):
-            violations.append("GOLD: Отсутствуют кавычки")
-            corrections.append('Добавить кавычки вокруг текста')
+            violations.append("GOLD: Quotes missing")
+            corrections.append('Add quotes around the text')
             form_coherence = 0.3
         
-        # Проверка семантики (логическая ценность)
+        # Semantics check (logical value)
         if semantic_coherence < 0.3:
-            violations.append("GOLD: Низкая логическая ценность")
-            corrections.append("Добавить логические конструкции или данные")
+            violations.append("GOLD: Low logical value")
+            corrections.append("Add logical constructs or data")
             semantic_coherence = 0.3
         
         # Объяснимость
-        explainability.append(f"Логическая оценка: {semantic_coherence:.2f}")
+        explainability.append(f"Logic score: {semantic_coherence:.2f}")
         if parsed.get("has_metrics", False):
-            explainability.append("Обнаружены числовые метрики")
+            explainability.append("Numerical metrics detected")
         
         return {
             "valid": len(violations) == 0,
@@ -723,7 +723,7 @@ class FormalValidator:
         }
     
     def _validate_red(self, parsed: Dict) -> Dict:
-        """Валидация RED треугольника"""
+        """Validating RED triangle"""
         violations = []
         corrections = []
         explainability = []
@@ -734,23 +734,23 @@ class FormalValidator:
         
         # Проверка формы (вопрос)
         if not parsed.get("is_question", False):
-            violations.append("RED: Отсутствует маркер вопроса")
-            corrections.append("Добавить '?' или '❓'")
+            violations.append("RED: Question marker missing")
+            corrections.append("Add '?' or '❓'")
             form_coherence = 0.4
         
-        # Проверка семантики (глубина вопроса)
+        # Semantics check (question depth)
         question_type = parsed.get("question_type", "GENERIC")
         if question_type == "GENERIC" and semantic_coherence < 0.5:
-            violations.append("RED: Поверхностный вопрос")
-            corrections.append("Углубить вопрос, добавить контекст")
+            violations.append("RED: Shallow question")
+            corrections.append("Deepen the question, add context")
             semantic_coherence = 0.5
         
         # Проверка провокативности
         if not parsed.get("has_provocative", False):
             semantic_coherence *= 0.8
         
-        explainability.append(f"Тип вопроса: {question_type}")
-        explainability.append(f"Оценка глубины: {semantic_coherence:.2f}")
+        explainability.append(f"Question type: {question_type}")
+        explainability.append(f"Depth score: {semantic_coherence:.2f}")
         
         return {
             "valid": len(violations) == 0,
@@ -763,7 +763,7 @@ class FormalValidator:
         }
     
     def _validate_green(self, parsed: Dict) -> Dict:
-        """Валидация GREEN треугольника"""
+        """Validating GREEN triangle"""
         violations = []
         corrections = []
         explainability = []
@@ -772,31 +772,31 @@ class FormalValidator:
         semantic_coherence = 1.0
         arch_coherence = 1.0
         
-        # Проверка формы (JSON тег)
+        # Form check (JSON tag)
         if not parsed.get("has_json_tag", False):
-            violations.append("GREEN: Отсутствует тег данных #[id]")
-            corrections.append("Добавить тег #[уникальный_id]")
+            violations.append("GREEN: Data tag #[id] missing")
+            corrections.append("Add tag #[unique_id]")
             form_coherence = 0.3
         
-        # Проверка валидности JSON
+        # JSON validity check
         if not parsed.get("json_valid", False):
-            violations.append("GREEN: Невалидная JSON структура")
-            corrections.append("Исправить JSON формат")
+            violations.append("GREEN: Invalid JSON structure")
+            corrections.append("Fix JSON format")
             arch_coherence = 0.2
         
-        # Проверка безопасности
+        # Security check
         if parsed.get("security_risk", False):
-            violations.append("GREEN: Обнаружены потенциально опасные конструкции")
-            corrections.append("Очистить ввод от инъекционных паттернов")
+            violations.append("GREEN: Potentially dangerous constructs detected")
+            corrections.append("Clear input of injection patterns")
             arch_coherence = 0.1
         
-        # Проверка плотности данных
+        # Data density check
         data_density = parsed.get("data_density", 0)
-        if data_density > 100:  # Слишком плотные данные
+        if data_density > 100:  # Too dense data
             semantic_coherence = 0.7
-            explainability.append("Высокая плотность данных - возможна избыточность")
+            explainability.append("High data density - possible redundancy")
         
-        explainability.append(f"Плотность данных: {data_density:.1f} chars/structure")
+        explainability.append(f"Data density: {data_density:.1f} chars/structure")
         
         return {
             "valid": len(violations) == 0,
@@ -809,17 +809,17 @@ class FormalValidator:
         }
     
     def _validate_black(self, parsed: Dict) -> Dict:
-        """Валидация BLACK треугольника"""
-        # BLACK CORE всегда валиден, но мониторит
+        """Validating BLACK triangle"""
+        # BLACK CORE is always valid, but monitors
         explainability = []
         
         command_level = parsed.get("command_level", "LOW")
         if command_level == "HIGH":
-            explainability.append("Высокоуровневая команда - требуется мониторинг")
+            explainability.append("High-level command - monitoring required")
         
         security_risk = parsed.get("security_implication", "LOW")
         if security_risk == "HIGH":
-            explainability.append("Выявлены потенциальные риски безопасности")
+            explainability.append("Potential security risks identified")
         
         return {
             "valid": True,
@@ -832,16 +832,16 @@ class FormalValidator:
         }
     
     def _calculate_question_depth(self, text: str) -> float:
-        """Расчет глубины вопроса"""
-        depth = 0.5  # Базовая глубина
+        """Question depth calculation"""
+        depth = 0.5  # Base depth
         
-        # Признаки глубоких вопросов
+        # Deep question traits
         deep_patterns = [
-            r'\b(почему|зачем|причина|корень|исходн)\b',
-            r'\b(гипотеза|предположение|альтернатива)\b',
-            r'[?]{2,}',  # Множественные вопросы
-            r'\b(если\s+.*\s+то\s*)\?',
-            r'\b(последств|результат|следствие)\b'
+            r'\b(why|reason|root|original)\b',
+            r'\b(hypothesis|assumption|alternative)\b',
+            r'[?]{2,}',  # Multiple questions
+            r'\b(if\s+.*\s+then\s*)\?',
+            r'\b(consequence|result|outcome)\b'
         ]
         
         for pattern in deep_patterns:
@@ -851,7 +851,7 @@ class FormalValidator:
         return min(1.0, depth)
     
     def _assess_structure(self, text: str) -> float:
-        """Оценка структурного качества"""
+        """Structural quality assessment"""
         score = 0.0
         
         sentences = re.split(r'[.!?]', text)
@@ -865,17 +865,17 @@ class FormalValidator:
         if any(marker in text for marker in [':', ';', '-']):
             score += 0.2
         
-        if any(connector in text for connector in ['поэтому', 'следовательно', 'таким образом']):
+        if any(connector in text for connector in ['therefore', 'consequently', 'thus']):
             score += 0.2
         
         return min(1.0, score)
     
     def _assess_command_level(self, text: str) -> str:
-        """Оценка уровня команды"""
+        """Command level assessment"""
         text_lower = text.lower()
         
-        high_level = ['инициировать', 'активировать', 'деактивировать', 'перезагрузить', 'остановить']
-        medium_level = ['проверить', 'анализировать', 'мониторить', 'отслеживать']
+        high_level = ['initiate', 'activate', 'deactivate', 'reboot', 'stop']
+        medium_level = ['check', 'analyze', 'monitor', 'track']
         
         if any(cmd in text_lower for cmd in high_level):
             return "HIGH"
@@ -885,11 +885,11 @@ class FormalValidator:
             return "LOW"
     
     def _assess_security_implication(self, text: str) -> str:
-        """Оценка импликаций безопасности"""
+        """Security implication assessment"""
         risk_patterns = [
-            r'\b(пароль|ключ|токен|секрет|доступ)\b',
-            r'\b(удалить|стереть|очистить|сбросить)\b',
-            r'\b(система|ядро|архитектура|безопасность)\s+.*\s+(изменить|модифицировать)\b'
+            r'\b(password|key|token|secret|access)\b',
+            r'\b(delete|erase|clear|reset)\b',
+            r'\b(system|core|architecture|security)\s+.*\s+(change|modify)\b'
         ]
         
         for pattern in risk_patterns:
@@ -899,11 +899,11 @@ class FormalValidator:
         return "LOW"
 
 # ==========================================
-#  ФОРМАЛЬНЫЙ НОРМАЛИЗАТОР
+#  FORMAL NORMALIZER
 # ==========================================
 
 class FormalNormalizer:
-    """Формальный нормализатор с безопасной автокоррекцией"""
+    """Formal normalizer with safe auto-correction"""
     
     def __init__(self, engine: FormalResonanceEngine):
         self.engine = engine
@@ -911,7 +911,7 @@ class FormalNormalizer:
         self.max_corrections = 3
     
     async def normalize(self, parsed: Dict, triangle: TriangleColor) -> str:
-        """Нормализация ввода согласно формальным правилам"""
+        """Input normalization according to formal rules"""
         raw_text = parsed["raw"]
         
         if triangle == TriangleColor.GOLD:
@@ -926,51 +926,51 @@ class FormalNormalizer:
             return raw_text
     
     def _normalize_gold(self, text: str, parsed: Dict) -> str:
-        """Нормализация GOLD ввода"""
-        # Убеждаемся в наличии кавычек
+        """Normalizing GOLD input"""
+        # Ensure quotes exist
         if not parsed.get("has_quotes", False):
             text = f'"{text}"'
         
-        # Улучшаем логическую структуру если нужно
+        # Improve logical structure if needed
         logic_score = parsed.get("logic_score", 0.0)
         if logic_score < 0.5:
-            # Добавляем логические маркеры
+            # Add logic markers
             if ':' not in text and len(text.split()) > 10:
                 parts = text.split('"')
                 if len(parts) >= 3:
                     content = parts[1]
-                    text = f'"Анализ: {content}"'
+                    text = f'"Analysis: {content}"'
         
         return text
     
     def _normalize_red(self, text: str, parsed: Dict) -> str:
-        """Нормализация RED ввода с защитой от семантической коррупции"""
+        """Normalizing RED input with semantic corruption protection"""
         original = text.strip()
         
-        # Проверяем, является ли текст действительно вопросом
+        # Check if text is actually a question
         is_actually_question = self._is_actually_question(original)
         
-        # Добавляем маркеры если нужно
+        # Add markers if needed
         if not parsed.get("is_question", False):
             if is_actually_question:
                 if not original.startswith("❓"):
                     text = f"❓ {original.rstrip('?')}?"
             else:
-                # Помечаем как трансформированный
+                # Mark as transformed
                 text = f"❓ [TRANSFORMED] {original}?"
         
         return text
     
     def _normalize_green(self, text: str, parsed: Dict) -> str:
-        """Нормализация GREEN ввода с защитой от инъекций"""
-        # Если нет JSON тега, добавляем
+        """Normalizing GREEN input with injection protection"""
+        # If no JSON tag, add one
         if not parsed.get("has_json_tag", False):
             data_id = self.engine._generate_data_id()
             
-            # Очищаем текст от опасных конструкций
+            # Clear text from dangerous constructs
             safe_text = self._sanitize_for_json(text)
             
-            # Создаем JSON структуру
+            # Create JSON structure
             json_data = {
                 "content": safe_text,
                 "id": data_id,
@@ -980,9 +980,9 @@ class FormalNormalizer:
             
             text = f"#[{data_id}] {json.dumps(json_data, ensure_ascii=False)}"
         
-        # Валидируем JSON если есть
+        # Validate JSON if present
         elif not parsed.get("json_valid", False):
-            # Пытаемся исправить JSON
+            # Attempt to fix JSON
             fixed = self._fix_json_structure(text)
             if fixed:
                 text = fixed
@@ -990,28 +990,28 @@ class FormalNormalizer:
         return text
     
     def _normalize_black(self, text: str, parsed: Dict) -> str:
-        """Нормализация BLACK ввода"""
+        """Normalizing BLACK input"""
         if not parsed.get("has_core_prefix", False):
             text = f"🖤 {text}"
         return text
     
     async def correct(self, text: str, triangle: TriangleColor, validation: ValidationResult) -> str:
-        """Коррекция на основе результатов валидации"""
+        """Correction based on validation results"""
         if len(self.correction_history) >= self.max_corrections:
-            raise RuntimeError(f"Достигнут лимит коррекций: {self.max_corrections}")
+            raise RuntimeError(f"Correction limit reached: {self.max_corrections}")
         
         corrected = text
         
-        # Применяем коррекции из валидации
-        for correction in validation.corrections[:2]:  # Максимум 2 коррекции за раз
-            if "кавычки" in correction.lower():
+        # Apply corrections from validation
+        for correction in validation.corrections[:2]:  # Max 2 corrections at once
+            if "quote" in correction.lower() or "кавычк" in correction.lower():
                 corrected = self._apply_gold_correction(corrected)
-            elif "вопрос" in correction.lower() or "❓" in correction:
+            elif "question" in correction.lower() or "вопрос" in correction.lower() or "❓" in correction:
                 corrected = self._apply_red_correction(corrected)
-            elif "json" in correction.lower() or "тег" in correction.lower():
+            elif "json" in correction.lower() or "tag" in correction.lower() or "тег" in correction.lower():
                 corrected = self._apply_green_correction(corrected)
         
-        # Логируем коррекцию
+        # Log correction
         self.correction_history.append({
             "timestamp": datetime.now().isoformat(),
             "triangle": triangle.code,
@@ -1023,43 +1023,42 @@ class FormalNormalizer:
         return corrected
     
     def _apply_gold_correction(self, text: str) -> str:
-        """Коррекция GOLD ввода"""
+        """GOLD input correction"""
         if not (text.startswith('"') and text.endswith('"')):
             return f'"{text}"'
         return text
     
     def _apply_red_correction(self, text: str) -> str:
-        """Коррекция RED ввода"""
+        """RED input correction"""
         if "?" not in text[-3:] and not text.startswith("❓"):
             return f"❓ {text.rstrip('?')}?"
         return text
     
     def _apply_green_correction(self, text: str) -> str:
-        """Коррекция GREEN ввода"""
+        """GREEN input correction"""
         if "#[" not in text:
             data_id = self.engine._generate_data_id()
             return f"#[{data_id}] {json.dumps({'content': text, 'id': data_id})}"
         return text
     
     def _is_actually_question(self, text: str) -> bool:
-        """Определение, является ли текст действительно вопросом"""
-        question_words = {'почему', 'как', 'что', 'зачем', 'когда', 'где', 'кто', 'чей'}
+        """Checking if the text is actually a question"""
+        question_words = {'why', 'how', 'what', 'where', 'when', 'who', 'whose'}
         text_lower = text.lower()
         
-        # Проверка по вопросительным словам
+        # Check by question words
         if any(word in text_lower for word in question_words):
             return True
         
-        # Проверка по структуре
+        # Check by structure
         if text_lower.endswith('?'):
             return True
         
-        # Проверка по интонационным паттернам
+        # Check by intonation patterns
         question_patterns = [
             r'^.*\?$',
-            r'\b(?:можно|возможно|правильно|верно)\s+ли\b',
-            r'\b(?:есть|существует)\s+ли\b',
-            r'\b(?:что|как)\s+насчет\b'
+            r'\b(?:is|are|can|do|does|will|should|could)\s+.*\?$',
+            r'\b(?:what|how)\s+about\b'
         ]
         
         for pattern in question_patterns:
@@ -1069,8 +1068,8 @@ class FormalNormalizer:
         return False
     
     def _sanitize_for_json(self, text: str) -> str:
-        """Санитизация текста для безопасного JSON"""
-        # Экранирование специальных символов
+        """Text sanitization for safe JSON"""
+        # Escaping special characters
         replacements = {
             '"': '\\"',
             '\n': '\\n',
@@ -1082,7 +1081,7 @@ class FormalNormalizer:
         for char, replacement in replacements.items():
             text = text.replace(char, replacement)
         
-        # Удаление потенциально опасных последовательностей
+        # Removing potentially dangerous sequences
         danger_patterns = [
             r'</?script>',
             r'on\w+=\s*["\'].*?["\']',
@@ -1097,32 +1096,32 @@ class FormalNormalizer:
         return text
     
     def _fix_json_structure(self, text: str) -> Optional[str]:
-        """Попытка исправления JSON структуры"""
+        """Attempting to fix JSON structure"""
         try:
-            # Извлекаем JSON часть
+            # Extract JSON part
             if "#[" in text:
                 parts = text.split("]", 1)
                 if len(parts) == 2:
                     tag = parts[0] + "]"
                     json_str = parts[1].strip()
                     
-                    # Пытаемся распарсить
+                    # Attempt to parse
                     json.loads(json_str)
-                    return text  # Уже валиден
+                    return text  # Already valid
                     
-                    # Или пытаемся исправить
-                    # (здесь можно добавить более сложную логику исправления)
+                    # Or attempt to fix
+                    # (more complex fix logic can be added here)
         except:
             pass
         
         return None
 
 # ==========================================
-#  КОНТРОЛЛЕР STATE MACHINE
+#  STATE MACHINE CONTROLLER
 # ==========================================
 
 class TrinityFSMController:
-    """Контроллер конечного автомата Trinity"""
+    """Trinity Finite State Machine Controller"""
     
     def __init__(self):
         self.triangles = {}
@@ -1131,16 +1130,16 @@ class TrinityFSMController:
         self.global_state = "INITIALIZING"
         
     def activate_triangle(self, triangle: TriangleColor) -> bool:
-        """Активация треугольника в FSM"""
-        # Инициализируем если нужно
+        """Triangle activation in FSM"""
+        # Initialize if needed
         if triangle not in self.triangles:
             self.triangles[triangle] = TriangleState(triangle)
         
-        # Деактивируем предыдущий активный
+        # Deactivate previous active
         if self.active_triangle and self.active_triangle != triangle:
             self._deactivate_triangle(self.active_triangle)
         
-        # Активируем новый
+        # Activate new one
         triangle_state = self.triangles[triangle]
         
         if triangle_state.transition(TrinityState.LISTENING):
@@ -1151,18 +1150,18 @@ class TrinityFSMController:
         return False
     
     def _deactivate_triangle(self, triangle: TriangleColor):
-        """Деактивация треугольника"""
+        """Triangle deactivation"""
         if triangle in self.triangles:
             triangle_state = self.triangles[triangle]
             triangle_state.transition(TrinityState.DORMANT)
             self._log_transition(triangle, "DEACTIVATED")
     
     def get_triangle_state(self, triangle: TriangleColor) -> Optional[TriangleState]:
-        """Получение состояния треугольника"""
+        """Getting triangle state"""
         return self.triangles.get(triangle)
     
     def get_system_state(self) -> Dict:
-        """Получение полного состояния системы"""
+        """Getting full system state"""
         return {
             "global_state": self.global_state,
             "active_triangle": self.active_triangle.code if self.active_triangle else None,
@@ -1179,7 +1178,7 @@ class TrinityFSMController:
         }
     
     def _log_transition(self, triangle: TriangleColor, action: str):
-        """Логирование переходов"""
+        """Transitions logging"""
         entry = {
             "timestamp": datetime.now().isoformat(),
             "triangle": triangle.code,
@@ -1188,22 +1187,22 @@ class TrinityFSMController:
         }
         self.transition_log.append(entry)
         
-        # Ограничиваем размер лога
+        # Limit log size
         if len(self.transition_log) > 1000:
             self.transition_log = self.transition_log[-500:]
 
 # ==========================================
-#  МОДЕЛЬ УГРОЗ И БЕЗОПАСНОСТЬ
+#  THREAT MODEL AND SECURITY
 # ==========================================
 
 class TrinityThreatModel:
-    """Формальная модель угроз Trinity системы"""
+    """Formal Trinity system threat model"""
     
     THREAT_MATRIX = {
         "T1": {
             "id": "T1",
             "name": "Semantic Corruption Attack",
-            "description": "Искажение семантики при автокоррекции",
+            "description": "Semantic distortion during auto-correction",
             "severity": "MEDIUM",
             "likelihood": "MEDIUM",
             "vector": "RED normalization",
@@ -1213,7 +1212,7 @@ class TrinityThreatModel:
         "T2": {
             "id": "T2",
             "name": "JSON Injection",
-            "description": "Внедрение кода через JSON сериализацию",
+            "description": "Code injection via JSON serialization",
             "severity": "HIGH",
             "likelihood": "LOW",
             "vector": "GREEN data input",
@@ -1223,7 +1222,7 @@ class TrinityThreatModel:
         "T3": {
             "id": "T3",
             "name": "Coherence Degradation",
-            "description": "Постепенное снижение когерентности системы",
+            "description": "Gradual decline in system coherence",
             "severity": "MEDIUM",
             "likelihood": "HIGH",
             "vector": "Multiple minor violations",
@@ -1233,7 +1232,7 @@ class TrinityThreatModel:
         "T4": {
             "id": "T4",
             "name": "State Machine Deadlock",
-            "description": "Блокировка FSM в нерабочем состоянии",
+            "description": "FSM lock in a non-working state",
             "severity": "HIGH",
             "likelihood": "LOW",
             "vector": "Invalid state transitions",
@@ -1243,7 +1242,7 @@ class TrinityThreatModel:
         "T5": {
             "id": "T5",
             "name": "Recursive Correction Loop",
-            "description": "Бесконечная цикличная коррекция",
+            "description": "Infinite cyclical correction",
             "severity": "HIGH",
             "likelihood": "LOW",
             "vector": "Edge case normalization",
@@ -1253,7 +1252,7 @@ class TrinityThreatModel:
         "T6": {
             "id": "T6",
             "name": "Resource Exhaustion",
-            "description": "Исчерпание ресурсов через сложные запросы",
+            "description": "Resource depletion through complex requests",
             "severity": "MEDIUM",
             "likelihood": "MEDIUM",
             "vector": "Large or complex inputs",
@@ -1269,13 +1268,13 @@ class TrinityThreatModel:
         self.last_scan = datetime.now()
     
     def initialize(self):
-        """Инициализация системы защиты"""
-        print("⚡ Инициализация модели угроз...")
+        """Defense system initialization"""
+        print("⚡ Initializing threat model...")
         self._load_threat_patterns()
         self._start_monitoring()
     
     def _load_threat_patterns(self):
-        """Загрузка паттернов угроз"""
+        """Threat patterns loading"""
         self.patterns = {
             "injection": self._compile_injection_patterns(),
             "semantic": self._compile_semantic_patterns(),
@@ -1283,7 +1282,7 @@ class TrinityThreatModel:
         }
     
     def _compile_injection_patterns(self) -> List[re.Pattern]:
-        """Компиляция паттернов инъекций"""
+        """Injection patterns compilation"""
         return [
             re.compile(pattern, re.IGNORECASE) for pattern in [
                 r'[;\{\}\[\]\(\)\"\']\s*[\{\[\("]',
@@ -1297,33 +1296,33 @@ class TrinityThreatModel:
         ]
     
     def _compile_semantic_patterns(self) -> List[re.Pattern]:
-        """Компиляция семантических паттернов"""
+        """Semantic patterns compilation"""
         return [
             re.compile(pattern, re.IGNORECASE) for pattern in [
-                r'^[^?]*\?$',  # Утверждение с вопросом
-                r'\b(?:нет|не)\s+\?',  # Отрицание с вопросом
-                r'[!?]{3,}',  # Множественные знаки
-                r'\b(?:это|тот|та)\s+не\s+\w+\s*\?'  # Противоречивые конструкции
+                r'^[^?]*\?$',  # Statement with a question
+                r'\b(?:no|not)\s+\?',  # Negation with a question
+                r'[!?]{3,}',  # Multiple signs
+                r'\b(?:this|that)\s+is\s+not\s+\w+\s*\?'  # Contradictory constructions
             ]
         ]
     
     def _compile_resource_patterns(self) -> List[re.Pattern]:
-        """Компиляция паттернов ресурсов"""
+        """Resource patterns compilation"""
         return [
             re.compile(pattern) for pattern in [
-                r'.{1000,}',  # Очень длинные строки
-                r'\{\s*".*?".*?\}{10,}',  # Множественные JSON объекты
-                r'#\[.*?\].*?#\[.*?\]',  # Множественные теги
+                r'.{1000,}',  # Very long strings
+                r'\{\s*".*?".*?\}{10,}',  # Multiple JSON objects
+                r'#\[.*?\].*?#\[.*?\]',  # Multiple tags
             ]
         ]
     
     def _start_monitoring(self):
-        """Запуск мониторинга угроз"""
-        print("   Запуск мониторинга угроз...")
-        # В реальной системе здесь был бы запуск фоновых задач
+        """Threat monitoring launch"""
+        print("   Launching threat monitoring...")
+        # In a real system, background tasks would be started here
     
     def scan_input(self, text: str, triangle: TriangleColor) -> List[Dict]:
-        """Сканирование ввода на угрозы"""
+        """Scanning input for threats"""
         threats = []
         
         for threat_id, threat_info in self.THREAT_MATRIX.items():
@@ -1343,7 +1342,7 @@ class TrinityThreatModel:
         return threats
     
     def _check_threat(self, text: str, triangle: TriangleColor, threat: Dict) -> bool:
-        """Проверка конкретной угрозы"""
+        """Checking specific threat"""
         threat_id = threat["id"]
         
         if threat_id == "T1":  # Semantic Corruption
@@ -1351,22 +1350,22 @@ class TrinityThreatModel:
         elif threat_id == "T2":  # JSON Injection
             return self._check_json_injection(text, triangle)
         elif threat_id == "T3":  # Coherence Degradation
-            return False  # Проверяется отдельно
+            return False  # Checked separately
         elif threat_id == "T4":  # State Machine Deadlock
-            return False  # Проверяется в FSM
+            return False  # Checked in FSM
         elif threat_id == "T5":  # Recursive Correction
-            return False  # Проверяется в нормализаторе
+            return False  # Checked in normalizer
         elif threat_id == "T6":  # Resource Exhaustion
             return self._check_resource_exhaustion(text)
         
         return False
     
     def _check_semantic_corruption(self, text: str, triangle: TriangleColor) -> bool:
-        """Проверка семантической коррупции"""
+        """Semantic corruption check"""
         if triangle != TriangleColor.RED:
             return False
         
-        # Проверяем противоречивые конструкции
+        # Checking contradictory constructions
         for pattern in self.patterns["semantic"]:
             if pattern.search(text):
                 return True
@@ -1374,7 +1373,7 @@ class TrinityThreatModel:
         return False
     
     def _check_json_injection(self, text: str, triangle: TriangleColor) -> bool:
-        """Проверка JSON инъекций"""
+        """JSON injection check"""
         if triangle != TriangleColor.GREEN:
             return False
         
@@ -1385,7 +1384,7 @@ class TrinityThreatModel:
         return False
     
     def _check_resource_exhaustion(self, text: str) -> bool:
-        """Проверка исчерпания ресурсов"""
+        """Resource exhaustion check"""
         for pattern in self.patterns["resource"]:
             if pattern.search(text):
                 return True
@@ -1393,12 +1392,12 @@ class TrinityThreatModel:
         return False
     
     def _update_threat_level(self):
-        """Обновление уровня угроз"""
+        """Updating threat level"""
         if not self.detected_threats:
             self.threat_level = "LOW"
             return
         
-        # Анализируем последние угрозы
+        # Analyze latest threats
         recent_threats = [t for t in self.detected_threats 
                          if datetime.now() - datetime.fromisoformat(t["detected_at"]) < timedelta(minutes=5)]
         
@@ -1406,7 +1405,7 @@ class TrinityThreatModel:
             self.threat_level = "LOW"
             return
         
-        # Определяем максимальную серьезность
+        # Determine maximum severity
         severities = {"LOW": 0, "MEDIUM": 1, "HIGH": 2}
         max_severity = max(severities[t["severity"]] for t in recent_threats)
         
@@ -1418,7 +1417,7 @@ class TrinityThreatModel:
             self.threat_level = "LOW"
     
     def get_current_threat_level(self) -> Dict:
-        """Получение текущего уровня угроз"""
+        """Getting current threat level"""
         recent = self.detected_threats[-5:] if self.detected_threats else []
         
         return {
@@ -1437,11 +1436,11 @@ class TrinityThreatModel:
         }
 
 # ==========================================
-#  МОНИТОР КОГЕРЕНТНОСТИ
+#  COHERENCE MONITOR
 # ==========================================
 
 class CoherenceMonitor:
-    """Мониторинг когерентности системы"""
+    """System coherence monitoring"""
     
     def __init__(self, engine: FormalResonanceEngine):
         self.engine = engine
@@ -1475,25 +1474,25 @@ class CoherenceMonitor:
     def record_processing(self, triangle: TriangleColor, 
                          processing_time: float, 
                          validation: ValidationResult):
-        """Запись обработки"""
-        # Время обработки
+        """Recording processing"""
+        # Processing time
         self.metrics["processing_times"].append(processing_time)
         
-        # Когерентность
+        # Coherence
         self.metrics["coherence_history"].append(validation.final_coherence)
         
-        # Нарушения и коррекции
+        # Violations and corrections
         if validation.violations:
             self.metrics["violation_counts"][triangle.code] += len(validation.violations)
         
         if validation.corrections:
             self.metrics["correction_counts"][triangle.code] += len(validation.corrections)
         
-        # Проверка аномалий
+        # Anomaly verification
         self._check_anomalies(triangle, processing_time, validation)
     
     def record_error(self, triangle: TriangleColor, error: str):
-        """Запись ошибки"""
+        """Recording error"""
         error_entry = {
             "timestamp": datetime.now().isoformat(),
             "triangle": triangle.code,
@@ -1502,37 +1501,37 @@ class CoherenceMonitor:
         }
         self.metrics["error_log"].append(error_entry)
         
-        # Генерация алерта
+        # Alert generation
         self._generate_alert("ERROR", f"{triangle.code}: {error}")
     
     def _check_anomalies(self, triangle: TriangleColor, 
                         processing_time: float, 
                         validation: ValidationResult):
-        """Проверка аномалий"""
+        """Checking for anomalies"""
         anomalies = []
         
-        # Аномальное время обработки
+        # Abnormal processing time
         if len(self.metrics["processing_times"]) > 10:
             avg_time = sum(self.metrics["processing_times"][-10:]) / 10
             if processing_time > avg_time * 3:
-                anomalies.append(f"Высокое время обработки: {processing_time:.3f}s")
+                anomalies.append(f"High processing time: {processing_time:.3f}s")
         
-        # Резкое падение когерентности
+        # Sharp coherence drop
         if len(self.metrics["coherence_history"]) > 5:
             recent = self.metrics["coherence_history"][-5:]
             if max(recent) - min(recent) > 0.5:
-                anomalies.append("Резкое изменение когерентности")
+                anomalies.append("Sharp coherence change")
         
-        # Множественные коррекции
+        # Multiple corrections
         if validation.corrections and len(validation.corrections) > 2:
-            anomalies.append("Множественные коррекции")
+            anomalies.append("Multiple corrections")
         
-        # Генерация алертов при аномалиях
+        # Generate alerts on anomalies
         for anomaly in anomalies:
             self._generate_alert("ANOMALY", f"{triangle.code}: {anomaly}")
     
     def _generate_alert(self, level: str, message: str):
-        """Генерация алерта"""
+        """Alert generation"""
         alert = {
             "id": f"ALERT_{len(self.alerts)+1:06d}",
             "timestamp": datetime.now().isoformat(),
@@ -1543,7 +1542,7 @@ class CoherenceMonitor:
         self.alerts.append(alert)
     
     def get_summary(self) -> Dict:
-        """Получение сводки мониторинга"""
+        """Getting monitoring summary"""
         if not self.metrics["processing_times"]:
             return {"status": "NO_DATA"}
         
@@ -1571,7 +1570,7 @@ class CoherenceMonitor:
         }
     
     def _calculate_coherence_trend(self) -> str:
-        """Расчет тренда когерентности"""
+        """Coherence trend calculation"""
         if len(self.metrics["coherence_history"]) < 10:
             return "INSUFFICIENT_DATA"
         
@@ -1590,29 +1589,29 @@ class CoherenceMonitor:
             return "STABLE"
 
 # ==========================================
-#  ИНТЕГРИРОВАННАЯ СИСТЕМА
+#  INTEGRATED SYSTEM
 # ==========================================
 
 class IntegratedTrinitySystem:
     """Интегрированная система Trinity v3.0"""
     
-    def __init__(self, admin_name: str = "Админ Алекс"):
-        print("🧠 Инициализация Integrated Trinity System v3.0...")
+    def __init__(self, admin_name: str = "Admin Alex"):
+        print("🧠 Initializing Integrated Trinity System v3.0...")
         
-        # Инициализация ядра
+        # Engine initialization
         self.engine = FormalResonanceEngine(admin_name)
         
-        # Состояние системы
+        # System state
         self.is_active = True
         self.session_start = datetime.now()
         self.interaction_count = 0
         
-        # Автосохранение
+        # Autosave
         self._setup_autosave()
         
-        print(f"✅ Integrated Trinity System v3.0 готова к работе")
-        print(f"   Сессия: {self.engine.session_id}")
-        print(f"   Время старта: {self.session_start.isoformat()}")
+        print(f"✅ Integrated Trinity System v3.0 ready")
+        print(f"   Session: {self.engine.session_id}")
+        print(f"   Start time: {self.session_start.isoformat()}")
     
     def _setup_autosave(self):
         """Настройка автосохранения"""
@@ -1620,7 +1619,7 @@ class IntegratedTrinitySystem:
         
         def autosave_task():
             while self.is_active:
-                time.sleep(300)  # 5 минут
+                time.sleep(300)  # 5 minutes
                 if self.is_active:
                     self.save_state()
         
@@ -1634,15 +1633,15 @@ class IntegratedTrinitySystem:
         print(f"\n[{self.interaction_count}] {triangle_code.upper()}: {message[:50]}...")
         
         try:
-            # Обработка через движок
+            # Processing through engine
             result = await self.engine.process(message, triangle_code)
             
-            # Обновление статистики
+            # Statistics update
             self._update_statistics(result)
             
-            # Проверка на критическое состояние
+            # Check for critical state
             if result.get("coherence", 1.0) < 0.3:
-                print(f"⚠️  КРИТИЧЕСКАЯ КОГЕРЕНТНОСТЬ: {result['coherence']:.2f}")
+                print(f"⚠️  CRITICAL COHERENCE: {result['coherence']:.2f}")
             
             return result
             
@@ -1651,14 +1650,14 @@ class IntegratedTrinitySystem:
                 "status": "system_error",
                 "error": str(e),
                 "triangle": triangle_code,
-                "message": f"🖤 [SYSTEM_FAILURE] Ошибка обработки: {str(e)}",
+                "message": f"🖤 [SYSTEM_FAILURE] Processing error: {str(e)}",
                 "coherence": 0.0
             }
             return error_result
     
     def _update_statistics(self, result: Dict):
         """Обновление статистики"""
-        # Здесь можно добавить логику сбора статистики
+        # Statistics collection logic can be added here
         pass
     
     def get_system_report(self) -> Dict:
@@ -1697,10 +1696,10 @@ class IntegratedTrinitySystem:
             with open(filename, 'w', encoding='utf-8') as f:
                 json.dump(state, f, ensure_ascii=False, indent=2)
             
-            print(f"💾 Состояние сохранено в {filename}")
+            print(f"💾 State saved to {filename}")
             return True
         except Exception as e:
-            print(f"⚠️ Ошибка сохранения: {str(e)}")
+            print(f"⚠️ Save error: {str(e)}")
             return False
     
     def shutdown(self):
@@ -1709,143 +1708,143 @@ class IntegratedTrinitySystem:
         
         self.is_active = False
         
-        # Финализация
+        # Finalization
         self.save_state()
         
-        print(f"✅ Система завершена. Всего взаимодействий: {self.interaction_count}")
-        print(f"   Финальная когерентность: {self.engine.coherence_history[-1] if self.engine.coherence_history else 'N/A'}")
+        print(f"✅ System terminated. Total interactions: {self.interaction_count}")
+        print(f"   Final coherence: {self.engine.monitor.metrics['coherence_history'][-1] if self.engine.monitor.metrics['coherence_history'] else 'N/A'}")
 
 # ==========================================
-#  ДЕМОНСТРАЦИОННЫЙ РЕЖИМ
+#  DEMONSTRATION MODE
 # ==========================================
 
 async def demonstration_mode():
-    """Демонстрация возможностей системы"""
+    """System capabilities demonstration"""
     print("\n" + "="*80)
-    print("ДЕМОНСТРАЦИЯ TRINITY RESONANCE CORE v3.0 - FORMAL SYSTEM")
+    print("DEMONSTRATION OF TRINITY RESONANCE CORE v3.0 - FORMAL SYSTEM")
     print("="*80)
     
-    # Инициализация системы
-    system = IntegratedTrinitySystem("Админ Алекс")
+    # System initialization
+    system = IntegratedTrinitySystem("Admin Alex")
     
-    # Тестовые сценарии
+    # Test scenarios
     test_scenarios = [
         {
-            "message": "Анализирую производительность алгоритма O(n log n)",
+            "message": "Analyzing O(n log n) algorithm performance",
             "triangle": "GOLD",
-            "description": "Корректный GOLD - логический анализ"
+            "description": "Correct GOLD - logical analysis"
         },
         {
-            "message": "Почему этот подход более эффективен?",
+            "message": "Why is this approach more efficient?",
             "triangle": "RED",
-            "description": "Корректный RED - глубокий вопрос"
+            "description": "Correct RED - deep question"
         },
         {
-            "message": "Это утверждение, а не вопрос",
+            "message": "This is a statement, not a question",
             "triangle": "RED",
-            "description": "Некорректный RED - потребует коррекции"
+            "description": "Incorrect RED - requires correction"
         },
         {
             "message": '{"metrics": {"accuracy": 0.95, "latency": 120}}',
             "triangle": "GREEN",
-            "description": "Некорректный GREEN - нет тега"
+            "description": "Incorrect GREEN - no tag"
         },
         {
-            "message": "Инициирую протокол безопасности системы",
+            "message": "Initiating system security protocol",
             "triangle": "BLACK",
-            "description": "Корректный BLACK - команда"
+            "description": "Correct BLACK - command"
         },
         {
-            "message": "Простой текст без кавычек",
+            "message": "Simple text without quotes",
             "triangle": "GOLD",
-            "description": "Некорректный GOLD - потребует коррекции"
+            "description": "Incorrect GOLD - requires correction"
         }
     ]
     
-    # Запуск тестов
+    # Running tests
     results = []
     for i, scenario in enumerate(test_scenarios, 1):
         print(f"\n{'─'*60}")
-        print(f"ТЕСТ {i}: {scenario['description']}")
-        print(f"Ввод: {scenario['message']}")
-        print(f"Треугольник: {scenario['triangle']}")
+        print(f"TEST {i}: {scenario['description']}")
+        print(f"Input: {scenario['message']}")
+        print(f"Triangle: {scenario['triangle']}")
         
         result = await system.communicate(scenario["message"], scenario["triangle"])
         
-        print(f"Результат: {result['status']}")
-        print(f"Когерентность: {result.get('coherence', 'N/A'):.2f}")
+        print(f"Status: {result['status']}")
+        print(f"Coherence: {result.get('coherence', 'N/A'):.2f}")
         
         if result["status"] == "success":
-            print(f"Ответ:\n{result['result'][:200]}...")
+            print(f"Response:\n{result['result'][:200]}...")
         
         results.append(result)
         
-        # Пауза между тестами
+        # Pause between tests
         await asyncio.sleep(0.5)
     
-    # Финальный отчет
+    # Final report
     print("\n" + "="*80)
-    print("ФИНАЛЬНЫЙ ОТЧЕТ СИСТЕМЫ")
+    print("FINAL SYSTEM REPORT")
     print("="*80)
     
     report = system.get_system_report()
     
-    # Статистика по треугольникам
-    print("\n📊 СТАТИСТИКА ПО ТРЕУГОЛЬНИКАМ:")
+    # Triangle statistics
+    print("\n📊 TRIANGLE STATISTICS:")
     for triangle in TriangleColor:
         stats = report["engine"]["triangles"][triangle.code]
         print(f"  {triangle.symbol} {triangle.code}:")
-        print(f"    Состояние: {stats['state']}")
-        print(f"    Когерентность: {stats['coherence']:.2f}")
-        print(f"    Нарушения: {stats['violations']}")
-        print(f"    Коррекции: {stats['corrections']}")
+        print(f"    State: {stats['state']}")
+        print(f"    Coherence: {stats['coherence']:.2f}")
+        print(f"    Violations: {stats['violations']}")
+        print(f"    Corrections: {stats['corrections']}")
     
-    # Общая когерентность
-    print(f"\n✨ ОБЩАЯ КОГЕРЕНТНОСТЬ СИСТЕМЫ: {report['engine']['coherence']['current']:.2f}")
+    # Total coherence
+    print(f"\n✨ TOTAL SYSTEM COHERENCE: {report['engine']['coherence']['current']:.2f}")
     
-    # Уровень угроз
+    # Threat level
     threat_level = report['threats']['level']
     threat_icon = "🔴" if threat_level == "HIGH" else "🟡" if threat_level == "MEDIUM" else "🟢"
-    print(f"\n{threat_icon} УРОВЕНЬ УГРОЗ: {threat_level}")
+    print(f"\n{threat_icon} THREAT LEVEL: {threat_level}")
     
-    # Сохранение отчета
+    # Save report
     report_filename = f"trinity_demo_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     with open(report_filename, 'w', encoding='utf-8') as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
     
-    print(f"\n📄 Полный отчет сохранён в: {report_filename}")
+    print(f"\n📄 Full report saved to: {report_filename}")
     
-    # Завершение
+    # Shutdown
     system.shutdown()
     
     return report
 
 # ==========================================
-#  КОМАНДНЫЙ ИНТЕРФЕЙС
+#  COMMAND INTERFACE
 # ==========================================
 
 class TrinityCLI:
-    """Командный интерфейс для Trinity System"""
+    """Command interface for Trinity System"""
     
     @staticmethod
     def run_interactive():
-        """Интерактивный режим работы"""
+        """Interactive work mode"""
         print("\n" + "="*80)
         print("TRINITY RESONANCE CORE v3.0 - INTERACTIVE MODE")
         print("="*80)
-        print("Доступные команды:")
-        print("  /gold <текст>    - Логический анализ (GOLD)")
-        print("  /red <текст>     - Критический вопрос (RED)")
-        print("  /green <текст>   - Структурированные данные (GREEN)")
-        print("  /black <текст>   - Команды управления (BLACK)")
-        print("  /status          - Статус системы")
-        print("  /report          - Полный отчет")
-        print("  /save <файл>     - Сохранить состояние")
-        print("  /exit            - Выход")
+        print("Available commands:")
+        print("  /gold <text>    - Logical analysis (GOLD)")
+        print("  /red <text>     - Critical question (RED)")
+        print("  /green <text>   - Structured data (GREEN)")
+        print("  /black <text>   - Control commands (BLACK)")
+        print("  /status          - System status")
+        print("  /report          - Full report")
+        print("  /save <file>   - Save state")
+        print("  /exit            - Exit")
         print("="*80)
         
-        # Инициализация системы
-        system = IntegratedTrinitySystem("Админ Алекс")
+        # System initialization
+        system = IntegratedTrinitySystem("Admin Alex")
         
         async def process_command():
             import asyncio
@@ -1858,7 +1857,7 @@ class TrinityCLI:
                         continue
                     
                     if user_input.lower() == "/exit":
-                        print("Завершение работы...")
+                        print("Shutting down...")
                         system.shutdown()
                         break
                     
@@ -1866,26 +1865,26 @@ class TrinityCLI:
                         report = system.get_system_report()
                         status = report["engine"]["coherence"]["current"]
                         level = CoherenceLevel.from_value(status)
-                        print(f"Статус системы: {level.icon} {level.description}")
-                        print(f"Когерентность: {status:.2f}")
-                        print(f"Взаимодействий: {system.interaction_count}")
+                        print(f"System status: {level.icon} {level.description}")
+                        print(f"Coherence: {status:.2f}")
+                        print(f"Interactions: {system.interaction_count}")
                         
                     elif user_input.lower() == "/report":
                         report = system.get_system_report()
                         report_file = f"trinity_report_{datetime.now().strftime('%H%M%S')}.json"
                         with open(report_file, 'w', encoding='utf-8') as f:
                             json.dump(report, f, ensure_ascii=False, indent=2)
-                        print(f"Отчёт сохранён в {report_file}")
+                        print(f"Report saved to {report_file}")
                     
                     elif user_input.lower().startswith("/save "):
                         filename = user_input[6:].strip()
                         if system.save_state(filename):
-                            print(f"Состояние сохранено в {filename}")
+                            print(f"State saved to {filename}")
                         else:
-                            print("Ошибка сохранения")
+                            print("Save error")
                     
                     elif user_input.startswith("/"):
-                        # Определяем треугольник
+                        # Identify triangle
                         if user_input.lower().startswith("/gold "):
                             triangle = "GOLD"
                             message = user_input[6:].strip()
@@ -1899,42 +1898,42 @@ class TrinityCLI:
                             triangle = "BLACK"
                             message = user_input[7:].strip()
                         else:
-                            print("Неизвестная команда")
+                            print("Unknown command")
                             continue
                         
                         if not message:
-                            print("Введите текст после команды")
+                            print("Enter text after command")
                             continue
                         
-                        # Обработка
+                        # Processing
                         result = await system.communicate(message, triangle)
                         
-                        # Вывод результата
-                        print(f"\n{result.get('result', 'Нет результата')}")
+                        # Output result
+                        print(f"\n{result.get('result', 'No result')}")
                         
                         if result.get('violations'):
-                            print(f"\nНарушения: {', '.join(result['violations'])}")
+                            print(f"\nViolations: {', '.join(result['violations'])}")
                         
                         if result.get('corrections'):
-                            print(f"Коррекции: {', '.join(result['corrections'])}")
+                            print(f"Corrections: {', '.join(result['corrections'])}")
                         
-                        print(f"Когерентность: {result.get('coherence', 0):.2f}")
+                        print(f"Coherence: {result.get('coherence', 0):.2f}")
                     
                     else:
-                        print("Используйте команды, начинающиеся с /")
+                        print("Use commands starting with /")
                         
                 except KeyboardInterrupt:
-                    print("\n\nПрервано пользователем")
+                    print("\n\nInterrupted by user")
                     system.shutdown()
                     break
                 except Exception as e:
-                    print(f"Ошибка: {str(e)}")
+                    print(f"Error: {str(e)}")
         
-        # Запуск асинхронной обработки
+        # Start async processing
         asyncio.run(process_command())
 
 # ==========================================
-#  ТОЧКА ВХОДА
+#  ENTRY POINT
 # ==========================================
 
 if __name__ == "__main__":
@@ -1942,26 +1941,26 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description="Trinity Resonance Core v3.0")
     parser.add_argument("--mode", choices=["demo", "interactive", "api"], 
-                       default="demo", help="Режим работы")
-    parser.add_argument("--admin", default="Админ Алекс", help="Имя администратора")
-    parser.add_argument("--save", help="Файл для сохранения состояния")
+                       default="demo", help="Operating mode")
+    parser.add_argument("--admin", default="Admin Alex", help="Administrator name")
+    parser.add_argument("--save", help="File to save state")
     
     args = parser.parse_args()
     
     if args.mode == "demo":
-        print("Запуск демонстрационного режима...")
+        print("Starting demonstration mode...")
         asyncio.run(demonstration_mode())
     
     elif args.mode == "interactive":
-        print("Запуск интерактивного режима...")
+        print("Starting interactive mode...")
         TrinityCLI.run_interactive()
     
     elif args.mode == "api":
-        print("API режим - в разработке")
+        print("API mode - in development")
         # Здесь будет REST API интерфейс
     
     print("\n" + "="*80)
-    print("TRINITY RESONANCE CORE v3.0 - ВЫПОЛНЕНИЕ ЗАВЕРШЕНО")
+    print("TRINITY RESONANCE CORE v3.0 - EXECUTION COMPLETE")
     print("="*80)
 
 # ==========================================
@@ -1969,42 +1968,42 @@ if __name__ == "__main__":
 # ==========================================
 
 ARCHITECTURAL_DOCUMENTATION = """
-🏛️ АРХИТЕКТУРНАЯ ДОКУМЕНТАЦИЯ
+🏛️ ARCHITECTURAL DOCUMENTATION
 
-Ключевые компоненты v3.0:
+Key components v3.0:
 
-1. FormalResonanceEngine - Центральный движок
-   · Управление сессиями
-   · Координация подсистем
-   · Мониторинг когерентности
+1. FormalResonanceEngine - Central Engine
+   · Session management
+   · Subsystems coordination
+   · Coherence monitoring
 
-2. TrinityFSMController - Конечный автомат
-   · Формальные переходы состояний
-   · Управление активностью треугольников
-   · Логирование всех переходов
+2. TrinityFSMController - Finite State Machine
+   · Formal state transitions
+   · Triangle activity management
+   · Transitions logging
 
-3. FormalValidator - Многоуровневая валидация
-   · Синтаксический разбор
-   · Семантическая оценка
-   · Архитектурная проверка
+3. FormalValidator - Multi-level validation
+   · Syntax parsing
+   · Semantic assessment
+   · Architectural verification
 
-4. FormalNormalizer - Безопасная нормализация
-   · Автокоррекция с защитой
-   · Защита от инъекций
-   · Контроль рекурсии
+4. FormalNormalizer - Safe normalization
+   · Protected auto-correction
+   · Injection protection
+   · Recursion control
 
-5. TrinityThreatModel - Формальная модель угроз
-   · 6 категорий угроз
-   · Паттерны обнаружения
-   · Уровни серьезности
+5. TrinityThreatModel - Formal threat model
+   · 6 threat categories
+   · Detection patterns
+   · Severity levels
 
-6. CoherenceMonitor - Мониторинг в реальном времени
-   · Метрики производительности
-   · Тренды когерентности
-   · Система алертов
+6. CoherenceMonitor - Real-time monitoring
+   · Performance metrics
+   · Coherence trends
+   · Alert system
 
 
-Матрица угроз:
+Threat Matrix:
 
 T1: Semantic Corruption      MEDIUM   RED     normalization / heuristics
 T2: JSON Injection           HIGH     GREEN   strict JSON validation
@@ -2014,21 +2013,21 @@ T5: Recursive Correction    HIGH     EDGE    correction limit (3)
 T6: Resource Exhaustion      MEDIUM   LOAD    size limits / timeout
 
 
-Состояния FSM:
+FSM States:
 
 DORMANT → LISTENING → PARSING → NORMALIZING → VALIDATING → EMITTING
                                ↓               ↓
                           CORRECTING       BLOCKED → RECOVERING
 
 
-Уровни когерентности:
+Coherence levels:
 
-CRITICAL (0.0–0.3)  — система нестабильна
-WARNING  (0.3–0.7)  — частичные нарушения
-STABLE   (0.7–0.9)  — минимальные отклонения
-OPTIMAL  (0.9–1.0)  — полная когерентность
+CRITICAL (0.0–0.3)  — system unstable
+WARNING  (0.3–0.7)  — partial violations
+STABLE   (0.7–0.9)  — minimal deviations
+OPTIMAL  (0.9–1.0)  — full coherence
 """
 
 print("\n" + "=" * 80)
-print("TRINITY RESONANCE CORE v3.0 — ВЫПОЛНЕНИЕ ЗАВЕРШЕНО")
+print("TRINITY RESONANCE CORE v3.0 — EXECUTION COMPLETE")
 print("=" * 80)

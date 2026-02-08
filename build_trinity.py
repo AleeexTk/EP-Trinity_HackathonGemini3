@@ -1,9 +1,9 @@
 import os
 import time
 
-# Структура Trinity v3.0 для автоматического создания
-# Этот скрипт создает каркас, но НЕ перезаписывает существующие файлы с контентом по умолчанию,
-# если они уже существуют.
+# Trinity v3.0 Structure for automatic creation
+# This script creates the skeleton, but does NOT overwrite existing files with default content,
+# if they already exist.
 
 structure = {
     "core": ["trinity_core.py", "evolution_protocol.py", "vision_monitor.py"],
@@ -44,7 +44,7 @@ def build():
                     f.write(f"# Trinity Component: {file}\n# Logic Score > 0.3 Verified\n")
             print(f"   📄 Generated scaffold: {file}")
 
-    print("\n🔥 [SUCCESS] Репозиторий готов.")
+    print("\n🔥 [SUCCESS] Repository is ready.")
 
 if __name__ == "__main__":
     build()

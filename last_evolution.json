@@ -1,0 +1,151 @@
+{
+  "metadata": {
+    "version": "3.0.0",
+    "saved_at": "2026-02-08T17:16:25.700687",
+    "session_id": "c487c9c2d8f5818b49b654f8",
+    "interaction_count": 6
+  },
+  "system_report": {
+    "system": {
+      "version": "3.0.0",
+      "uptime": 3.096145,
+      "interactions": 6,
+      "is_active": false,
+      "session_id": "c487c9c2d8f5818b49b654f8"
+    },
+    "engine": {
+      "session": {
+        "id": "c487c9c2d8f5818b49b654f8",
+        "signature": "SIG_15ea92080e28f2fcc435dba0617be892",
+        "version": "3.0.0",
+        "admin": "Admin Alex",
+        "uptime": 3.099886,
+        "initialized": true
+      },
+      "directive": {
+        "id": "DIR_c487c9c2d8f5818b",
+        "timestamp": "2026-02-08T17:16:22.600958",
+        "version": "3.0.0",
+        "admin": "Admin Alex",
+        "resonance_signature": "SIG_15ea92080e28f2fcc435dba0617be892",
+        "coherence_threshold": 0.7,
+        "max_corrections": 3,
+        "ttl_seconds": 3600,
+        "expires": "2026-02-08T18:16:22.600958"
+      },
+      "coherence": {
+        "current": 1.0,
+        "average": 0.833,
+        "min": 0.72,
+        "max": 1.0,
+        "history_size": 4
+      },
+      "triangles": {
+        "BLACK": {
+          "state": "EMITTING",
+          "coherence": 1.0,
+          "violations": 0,
+          "corrections": 0,
+          "active_for": 1.051015
+        },
+        "GOLD": {
+          "state": "DORMANT",
+          "coherence": 1.0,
+          "violations": 0,
+          "corrections": 0,
+          "active_for": 3.098588
+        },
+        "RED": {
+          "state": "DORMANT",
+          "coherence": 1.0,
+          "violations": 0,
+          "corrections": 0,
+          "active_for": 3.098489
+        },
+        "GREEN": {
+          "state": "DORMANT",
+          "coherence": 1.0,
+          "violations": 0,
+          "corrections": 0,
+          "active_for": 3.09836
+        }
+      },
+      "threats": {
+        "level": "LOW",
+        "last_scan": "2026-02-08T17:16:22.600977",
+        "recent_threats": [],
+        "total_detected": 0
+      },
+      "monitoring": {
+        "uptime_seconds": 3.099347,
+        "total_processed": 4,
+        "performance": {
+          "avg_processing_time": 0.0021339058876037598,
+          "max_processing_time": 0.005803823471069336,
+          "min_processing_time": 0.0007269382476806641
+        },
+        "coherence": {
+          "current": 1.0,
+          "average": 0.833,
+          "trend": "INSUFFICIENT_DATA"
+        },
+        "violations": {
+          "BLACK": 0,
+          "GOLD": 0,
+          "RED": 0,
+          "GREEN": 1
+        },
+        "corrections": {
+          "BLACK": 0,
+          "GOLD": 0,
+          "RED": 0,
+          "GREEN": 1
+        },
+        "alerts": {
+          "total": 0,
+          "unacknowledged": 0,
+          "recent": []
+        },
+        "errors": 0
+      }
+    },
+    "performance": {
+      "uptime_seconds": 3.099485,
+      "total_processed": 4,
+      "performance": {
+        "avg_processing_time": 0.0021339058876037598,
+        "max_processing_time": 0.005803823471069336,
+        "min_processing_time": 0.0007269382476806641
+      },
+      "coherence": {
+        "current": 1.0,
+        "average": 0.833,
+        "trend": "INSUFFICIENT_DATA"
+      },
+      "violations": {
+        "BLACK": 0,
+        "GOLD": 0,
+        "RED": 0,
+        "GREEN": 1
+      },
+      "corrections": {
+        "BLACK": 0,
+        "GOLD": 0,
+        "RED": 0,
+        "GREEN": 1
+      },
+      "alerts": {
+        "total": 0,
+        "unacknowledged": 0,
+        "recent": []
+      },
+      "errors": 0
+    },
+    "threats": {
+      "level": "LOW",
+      "last_scan": "2026-02-08T17:16:22.600977",
+      "recent_threats": [],
+      "total_detected": 0
+    }
+  }
+}
