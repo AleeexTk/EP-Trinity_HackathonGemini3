@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.db
+.DS_Store
+desktop.ini
+*.gdoc
+*.gsheet
+*.gslides
+_archive/
+*.mp3
+*.pdf
+trinity_demo_report_*.json
+trinity_state_*.json

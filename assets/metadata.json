@@ -1,0 +1,22 @@
+{
+  "project": "EvoPyramid-Trinity",
+  "version": "3.0.0",
+  "codename": "ONEGA",
+  "author": "Admin Alex (Aleeexzp@gmail.com)",
+  "cultural_code": {
+    "track": "Apashe - Kannibalen",
+    "theme": "Cyber-Symphony",
+    "philosophy": "Cognitive Integrity"
+  },
+  "architecture": {
+    "core": "Trinity Resonance Engine (FSM)",
+    "intelligence": "Gemini 1.5 Flash",
+    "deployment": "Sovereign/Local"
+  },
+  "hackathon_metrics": {
+    "latency_target_ms": 200,
+    "coherence_threshold": 0.3,
+    "security_level": "T1-T6"
+  },
+  "status": "COHERENT_1.00"
+}
