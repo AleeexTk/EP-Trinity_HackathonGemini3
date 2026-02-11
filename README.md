@@ -4,7 +4,7 @@
 
 [![Model: Gemini 3 Flash](https://img.shields.io/badge/Gemini-3_Flash-blue.svg)](https://deepmind.google/technologies/gemini/)
 [![Status: System Ready](https://img.shields.io/badge/Status-System_Ready-green.svg)](https://github.com/AleeexTk/EP-Trinity_HackathonGemini3)
-[![License: CARL v1.0](https://img.shields.io/badge/License-CARL_v1.0-gold.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-CARL_v1.0-gold.svg)](LICENSE)
 
 ## 👁️ Vision
 
